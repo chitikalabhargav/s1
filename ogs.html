@@ -1,0 +1,2592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickBasket - Online Grocery Store</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7f5;
+    color: #222;
+}
+
+header {
+    background: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px #ccc;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #198754;
+}
+
+.search {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary-btn {
+    background: #198754;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #146c43;
+}
+
+.profile-btn {
+    background: #e9f7ef;
+    color: #198754;
+}
+
+.cart-btn {
+    background: #198754;
+    color: white;
+}
+
+nav {
+    background: white;
+    padding: 12px 25px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    box-shadow: 0 1px 5px #ddd;
+}
+
+nav button {
+    background: #f0f0f0;
+    white-space: nowrap;
+}
+
+nav button:hover {
+    background: #dff3e7;
+}
+
+.container {
+    width: 94%;
+    max-width: 1400px;
+    margin: 25px auto;
+}
+
+.hero {
+    background: linear-gradient(120deg, #dff7e8, #fff);
+    padding: 40px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    color: #198754;
+    margin-bottom: 10px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.hidden {
+    display: none;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px #ddd;
+    transition: 0.2s;
+}
+
+.product:hover {
+    transform: translateY(-4px);
+}
+
+.product img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product h3 {
+    margin: 10px 0 5px;
+    font-size: 17px;
+}
+
+.price {
+    color: #198754;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+.rating {
+    color: #f4b400;
+    margin: 6px 0;
+}
+
+.product button {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.form-group {
+    margin: 15px 0;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.profile-summary {
+    background: #f0f8f3;
+    border-left: 5px solid #198754;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.profile-summary p {
+    margin: 7px 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    gap: 10px;
+}
+
+.quantity button {
+    padding: 5px 10px;
+}
+
+.total-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.payment-box {
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.offer {
+    background: #fff8dc;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.status {
+    padding: 10px;
+    background: #e9f7ef;
+    border-left: 5px solid #198754;
+    margin: 8px 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.dashboard-card {
+    background: #f1f8f4;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.dashboard-card h3 {
+    color: #198754;
+    margin-bottom: 8px;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 12px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.role-buttons {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.role-buttons button {
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">🛒 QuickBasket</div>
+
+    <div class="search">
+        <input type="text"
+               id="searchInput"
+               placeholder="Search groceries..."
+               onkeyup="searchProducts()">
+    </div>
+
+    <button class="profile-btn" onclick="showSection('profile')">
+        👤 Profile
+    </button>
+
+    <button class="cart-btn" onclick="showSection('cart')">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+
+</header>
+
+<nav>
+    <button onclick="filterCategory('All')">All</button>
+    <button onclick="filterCategory('Fruits & Vegetables')">🥦 Fruits</button>
+    <button onclick="filterCategory('Dairy & Eggs')">🥛 Dairy</button>
+    <button onclick="filterCategory('Rice & Grains')">🍚 Rice & Grains</button>
+    <button onclick="filterCategory('Pulses')">🫘 Pulses</button>
+    <button onclick="filterCategory('Snacks')">🍪 Snacks</button>
+    <button onclick="filterCategory('Beverages')">🥤 Beverages</button>
+    <button onclick="filterCategory('Bakery')">🍞 Bakery</button>
+    <button onclick="filterCategory('Frozen Foods')">❄️ Frozen</button>
+    <button onclick="filterCategory('Personal Care')">🧴 Personal Care</button>
+    <button onclick="filterCategory('Household Items')">🏠 Household</button>
+    <button onclick="filterCategory('Cleaning Products')">🧹 Cleaning</button>
+    <button onclick="filterCategory('Baby Care')">👶 Baby Care</button>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+
+<section id="home">
+
+    <div class="hero">
+        <h1>Fresh Groceries Delivered to Your Door 🛍️</h1>
+        <p>Shop groceries, snacks, beverages, household items and more.</p>
+        <br>
+        <button class="primary-btn" onclick="document.getElementById('products').scrollIntoView()">
+            Shop Now
+        </button>
+    </div>
+
+    <h2>🛍️ Products</h2>
+    <br>
+
+    <div id="products" class="products"></div>
+
+</section>
+
+
+<!-- CART -->
+
+<section id="cart" class="panel hidden">
+
+    <h2>🛒 Shopping Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="total-box">
+
+        <p>Subtotal: ₹<span id="subtotal">0</span></p>
+
+        <p>Discount: ₹<span id="discount">0</span></p>
+
+        <p>Delivery Charge: ₹<span id="deliveryCharge">0</span></p>
+
+        <hr><br>
+
+        <h3>Total: ₹<span id="finalTotal">0</span></h3>
+
+        <br>
+
+        <button class="primary-btn" onclick="showSection('offers')">
+            Apply Coupon
+        </button>
+
+        <button class="primary-btn" onclick="openCheckout()">
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- WISHLIST -->
+
+<section id="wishlist" class="panel hidden">
+
+    <h2>❤️ Wishlist</h2>
+    <br>
+
+    <div id="wishlistItems" class="products"></div>
+
+</section>
+
+
+<!-- OFFERS -->
+
+<section id="offers" class="panel hidden">
+
+    <h2>🎁 Today's Offers & Coupons</h2>
+
+    <div class="offer">
+        <h3>WELCOME10</h3>
+        <p>10% discount on orders above ₹500</p>
+        <button class="primary-btn" onclick="applyCoupon('WELCOME10')">
+            Apply
+        </button>
+    </div>
+
+    <div class="offer">
+        <h3>GROCERY50</h3>
+        <p>₹50 discount on orders above ₹800</p>
+        <button class="primary-btn" onclick="applyCoupon('GROCERY50')">
+            Apply
+        </button>
+    </div>
+
+    <div class="offer">
+        <h3>SAVE20</h3>
+        <p>20% discount on orders above ₹1000</p>
+        <button class="primary-btn" onclick="applyCoupon('SAVE20')">
+            Apply
+        </button>
+    </div>
+
+    <p id="couponMessage"></p>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="panel hidden">
+
+    <h2>👤 My Profile</h2>
+
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="profileName" placeholder="Enter full name">
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="profileEmail" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" id="profileMobile" placeholder="Enter mobile number">
+    </div>
+
+    <div class="form-group">
+        <label>Address</label>
+        <textarea id="profileAddress"
+                  placeholder="Enter complete address"></textarea>
+    </div>
+
+    <button class="primary-btn" onclick="saveProfile()">
+        Save Profile
+    </button>
+
+    <p id="profileMessage"></p>
+
+    <hr><br>
+
+    <h3>Login Options</h3>
+
+    <div class="role-buttons">
+
+        <button class="primary-btn"
+                onclick="openLogin('Customer')">
+            👤 Customer Login
+        </button>
+
+        <button class="primary-btn"
+                onclick="openLogin('Employee')">
+            👨‍💼 Employee Login
+        </button>
+
+        <button class="primary-btn"
+                onclick="openLogin('Store Manager')">
+            👨‍💼 Store Manager Login
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- CHECKOUT -->
+
+<section id="checkout" class="panel hidden">
+
+    <h2>🧾 Checkout</h2>
+
+    <div class="profile-summary">
+
+        <h3>Customer Information</h3>
+
+        <p>
+            <b>Name:</b>
+            <span id="checkoutName"></span>
+        </p>
+
+        <p>
+            <b>Email:</b>
+            <span id="checkoutEmail"></span>
+        </p>
+
+        <p>
+            <b>Mobile:</b>
+            <span id="checkoutMobile"></span>
+        </p>
+
+        <p>
+            <b>Address:</b>
+            <span id="checkoutAddress"></span>
+        </p>
+
+    </div>
+
+    <h3>Order Summary</h3>
+
+    <div id="checkoutItems"></div>
+
+    <div class="total-box">
+
+        <p>Subtotal: ₹<span id="checkoutSubtotal">0</span></p>
+        <p>Discount: ₹<span id="checkoutDiscount">0</span></p>
+        <p>Delivery Charge: ₹<span id="checkoutDelivery">0</span></p>
+
+        <hr><br>
+
+        <h3>
+            Final Amount: ₹<span id="checkoutTotal">0</span>
+        </h3>
+
+    </div>
+
+    <br>
+
+    <button class="primary-btn" onclick="showSection('payment')">
+        Continue to Payment
+    </button>
+
+</section>
+
+
+<!-- PAYMENT -->
+
+<section id="payment" class="panel hidden">
+
+    <h2>💳 Payment</h2>
+
+    <div class="profile-summary">
+
+        <h3>Customer Details</h3>
+
+        <p>
+            <b>Name:</b>
+            <span id="paymentCustomerName"></span>
+        </p>
+
+        <p>
+            <b>Mobile:</b>
+            <span id="paymentCustomerMobile"></span>
+        </p>
+
+        <p>
+            <b>Email:</b>
+            <span id="paymentCustomerEmail"></span>
+        </p>
+
+        <p>
+            <b>Address:</b>
+            <span id="paymentCustomerAddress"></span>
+        </p>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Select Payment Method</label>
+
+        <select id="paymentMethod"
+                onchange="changePaymentMethod()">
+
+            <option value="">Select Payment Method</option>
+
+            <option value="UPI">UPI</option>
+
+            <option value="COD">
+                Cash on Delivery
+            </option>
+
+            <option value="Debit Card">
+                Debit Card
+            </option>
+
+            <option value="Credit Card">
+                Credit Card
+            </option>
+
+            <option value="Net Banking">
+                Net Banking
+            </option>
+
+            <option value="Wallet">
+                Wallet
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- UPI -->
+
+    <div id="upiBox" class="payment-box hidden">
+
+        <h3>UPI Payment</h3>
+
+        <div class="form-group">
+
+            <label>UPI ID</label>
+
+            <input type="text"
+                   id="upiId"
+                   placeholder="example@upi">
+
+        </div>
+
+    </div>
+
+
+    <!-- CARD -->
+
+    <div id="cardBox" class="payment-box hidden">
+
+        <h3>Card Payment</h3>
+
+        <div class="form-group">
+
+            <label>Card Number</label>
+
+            <input type="text"
+                   id="cardNumber"
+                   placeholder="Enter card number">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Expiry Date</label>
+
+            <input type="month"
+                   id="expiryDate">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>CVV</label>
+
+            <input type="password"
+                   id="cvv"
+                   placeholder="Enter CVV">
+
+        </div>
+
+    </div>
+
+
+    <!-- NET BANKING -->
+
+    <div id="bankBox" class="payment-box hidden">
+
+        <h3>Net Banking</h3>
+
+        <div class="form-group">
+
+            <label>Select Bank</label>
+
+            <select id="bankName">
+
+                <option value="">
+                    Select Bank
+                </option>
+
+                <option>State Bank of India</option>
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>Axis Bank</option>
+                <option>Canara Bank</option>
+                <option>Bank of Baroda</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- WALLET -->
+
+    <div id="walletBox" class="payment-box hidden">
+
+        <h3>Wallet</h3>
+
+        <div class="form-group">
+
+            <label>Select Wallet</label>
+
+            <select id="walletName">
+
+                <option value="">
+                    Select Wallet
+                </option>
+
+                <option>PhonePe</option>
+                <option>Paytm</option>
+                <option>Amazon Pay</option>
+                <option>Mobikwik</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="total-box">
+
+        <h3>
+            Amount to Pay: ₹<span id="paymentTotal">0</span>
+        </h3>
+
+    </div>
+
+    <br>
+
+    <button class="primary-btn"
+            onclick="placeOrder()">
+
+        💳 Pay & Place Order
+
+    </button>
+
+    <p id="paymentMessage"></p>
+
+</section>
+
+
+<!-- ORDER CONFIRMATION -->
+
+<section id="confirmation" class="panel hidden">
+
+    <h2>🎉 Order Confirmed!</h2>
+
+    <br>
+
+    <div class="profile-summary">
+
+        <h3>Thank You!</h3>
+
+        <p>Your order has been placed successfully.</p>
+
+        <br>
+
+        <p>
+            <b>Order ID:</b>
+            <span id="orderId"></span>
+        </p>
+
+        <p>
+            <b>Customer:</b>
+            <span id="confirmName"></span>
+        </p>
+
+        <p>
+            <b>Payment Method:</b>
+            <span id="confirmPayment"></span>
+        </p>
+
+        <p>
+            <b>Amount:</b>
+            ₹<span id="confirmAmount"></span>
+        </p>
+
+        <p>
+            <b>Status:</b> Order Placed
+        </p>
+
+    </div>
+
+    <button class="primary-btn"
+            onclick="showSection('tracking')">
+
+        Track Order
+
+    </button>
+
+</section>
+
+
+<!-- TRACKING -->
+
+<section id="tracking" class="panel hidden">
+
+    <h2>📦 Order Tracking</h2>
+
+    <br>
+
+    <div class="status">
+        ✅ Order Placed
+    </div>
+
+    <div class="status">
+        ⏳ Order Confirmed
+    </div>
+
+    <div class="status">
+        ⏳ Being Prepared
+    </div>
+
+    <div class="status">
+        ⏳ Ready for Delivery
+    </div>
+
+    <div class="status">
+        ⏳ Out for Delivery
+    </div>
+
+    <div class="status">
+        ⏳ Delivered
+    </div>
+
+</section>
+
+
+<!-- MY ORDERS -->
+
+<section id="orders" class="panel hidden">
+
+    <h2>📋 My Orders</h2>
+
+    <div id="orderHistory">
+
+        <p>No orders placed yet.</p>
+
+    </div>
+
+</section>
+
+
+<!-- REVIEWS -->
+
+<section id="reviews" class="panel hidden">
+
+    <h2>⭐ Ratings & Reviews</h2>
+
+    <div class="form-group">
+
+        <label>Product</label>
+
+        <input type="text"
+               id="reviewProduct"
+               placeholder="Product name">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Rating</label>
+
+        <select id="reviewRating">
+
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Review</label>
+
+        <textarea id="reviewText"
+                  placeholder="Write your review"></textarea>
+
+    </div>
+
+    <button class="primary-btn"
+            onclick="submitReview()">
+
+        Submit Review
+
+    </button>
+
+    <p id="reviewMessage"></p>
+
+</section>
+
+
+<!-- SUPPORT -->
+
+<section id="support" class="panel hidden">
+
+    <h2>📞 Customer Support</h2>
+
+    <br>
+
+    <p><b>Customer Care:</b> 1800-123-4567</p>
+
+    <p><b>Email:</b> support@quickbasket.com</p>
+
+    <br>
+
+    <div class="form-group">
+
+        <label>Your Request</label>
+
+        <textarea id="supportRequest"
+                  placeholder="Enter your request"></textarea>
+
+    </div>
+
+    <button class="primary-btn"
+            onclick="submitSupport()">
+
+        Submit Request
+
+    </button>
+
+    <p id="supportMessage"></p>
+
+</section>
+
+
+<!-- EMPLOYEE DASHBOARD -->
+
+<section id="employee" class="panel hidden">
+
+    <h2>👨‍💼 Employee Dashboard</h2>
+
+    <br>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <h3>Orders</h3>
+            <p>125</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Preparing</h3>
+            <p>18</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Ready</h3>
+            <p>12</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Deliveries</h3>
+            <p>25</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <h3>Order Processing</h3>
+
+    <div class="form-group">
+
+        <label>Order Status</label>
+
+        <select id="employeeStatus">
+
+            <option>Received</option>
+            <option>Confirmed</option>
+            <option>Being Prepared</option>
+            <option>Ready for Delivery</option>
+            <option>Out for Delivery</option>
+            <option>Delivered</option>
+
+        </select>
+
+    </div>
+
+    <button class="primary-btn"
+            onclick="updateEmployeeStatus()">
+
+        Update Status
+
+    </button>
+
+    <p id="employeeMessage"></p>
+
+</section>
+
+
+<!-- STORE MANAGER -->
+
+<section id="manager" class="panel hidden">
+
+    <h2>👨‍💼 Store Manager Dashboard</h2>
+
+    <br>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <h3>Total Products</h3>
+            <p>500</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Customers</h3>
+            <p>1250</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Employees</h3>
+            <p>35</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Today's Sales</h3>
+            <p>₹85,000</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <h3>Management Modules</h3>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            📦 Product Management
+        </div>
+
+        <div class="dashboard-card">
+            🏷️ Category Management
+        </div>
+
+        <div class="dashboard-card">
+            📊 Inventory Management
+        </div>
+
+        <div class="dashboard-card">
+            💰 Price Management
+        </div>
+
+        <div class="dashboard-card">
+            👨‍💼 Employee Management
+        </div>
+
+        <div class="dashboard-card">
+            👥 Customer Management
+        </div>
+
+        <div class="dashboard-card">
+            🎟️ Coupon Management
+        </div>
+
+        <div class="dashboard-card">
+            📈 Sales Reports
+        </div>
+
+        <div class="dashboard-card">
+            ⭐ Review Management
+        </div>
+
+        <div class="dashboard-card">
+            🚚 Delivery Management
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<footer>
+
+    <h3>🛒 QuickBasket</h3>
+
+    <br>
+
+    <p>Online Grocery Store</p>
+
+    <p>Fresh groceries at your fingertips.</p>
+
+    <br>
+
+    <p>Customer Care: 1800-123-4567</p>
+
+    <p>© 2026 QuickBasket. All Rights Reserved.</p>
+
+</footer>
+
+
+<!-- LOGIN MODAL -->
+
+<div id="loginModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close"
+              onclick="closeLogin()">
+            &times;
+        </span>
+
+        <h2 id="loginTitle">Login</h2>
+
+        <div class="form-group">
+
+            <label>Username / Email</label>
+
+            <input type="text"
+                   id="loginUsername"
+                   placeholder="Enter username">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Password</label>
+
+            <input type="password"
+                   id="loginPassword"
+                   placeholder="Enter password">
+
+        </div>
+
+        <button class="primary-btn"
+                onclick="login()">
+
+            Login
+
+        </button>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   PRODUCT DATA
+========================= */
+
+const products = [
+
+    ["Apple", "Fruits & Vegetables", 120],
+    ["Banana", "Fruits & Vegetables", 50],
+    ["Orange", "Fruits & Vegetables", 80],
+    ["Mango", "Fruits & Vegetables", 100],
+    ["Grapes", "Fruits & Vegetables", 90],
+    ["Watermelon", "Fruits & Vegetables", 60],
+    ["Papaya", "Fruits & Vegetables", 70],
+    ["Pomegranate", "Fruits & Vegetables", 140],
+    ["Tomato", "Fruits & Vegetables", 40],
+    ["Potato", "Fruits & Vegetables", 35],
+    ["Onion", "Fruits & Vegetables", 45],
+    ["Carrot", "Fruits & Vegetables", 55],
+
+    ["Milk", "Dairy & Eggs", 60],
+    ["Curd", "Dairy & Eggs", 50],
+    ["Paneer", "Dairy & Eggs", 110],
+    ["Butter", "Dairy & Eggs", 120],
+    ["Cheese", "Dairy & Eggs", 150],
+    ["Eggs", "Dairy & Eggs", 90],
+
+    ["Basmati Rice", "Rice & Grains", 180],
+    ["Brown Rice", "Rice & Grains", 160],
+    ["Wheat", "Rice & Grains", 70],
+    ["Sona Masoori Rice", "Rice & Grains", 140],
+    ["Oats", "Rice & Grains", 120],
+    ["Ragi Flour", "Rice & Grains", 90],
+
+    ["Toor Dal", "Pulses", 130],
+    ["Moong Dal", "Pulses", 120],
+    ["Masoor Dal", "Pulses", 110],
+    ["Chana Dal", "Pulses", 100],
+    ["Rajma", "Pulses", 140],
+    ["Urad Dal", "Pulses", 125],
+
+    ["Biscuits", "Snacks", 30],
+    ["Potato Chips", "Snacks", 40],
+    ["Namkeen", "Snacks", 60],
+    ["Popcorn", "Snacks", 50],
+    ["Chocolate", "Snacks", 80],
+    ["Cookies", "Snacks", 70],
+
+    ["Coca Cola", "Beverages", 45],
+    ["Pepsi", "Beverages", 45],
+    ["Sprite", "Beverages", 40],
+    ["Fruit Juice", "Beverages", 100],
+    ["Green Tea", "Beverages", 140],
+    ["Coffee", "Beverages", 180],
+
+    ["Bread", "Bakery", 40],
+    ["Bun", "Bakery", 35],
+    ["Cake", "Bakery", 250],
+    ["Donut", "Bakery", 80],
+    ["Muffin", "Bakery", 70],
+
+    ["Frozen Peas", "Frozen Foods", 100],
+    ["Frozen Corn", "Frozen Foods", 90],
+    ["French Fries", "Frozen Foods", 150],
+    ["Frozen Paratha", "Frozen Foods", 120],
+
+    ["Shampoo", "Personal Care", 180],
+    ["Soap", "Personal Care", 40],
+    ["Toothpaste", "Personal Care", 100],
+    ["Face Wash", "Personal Care", 160],
+    ["Hand Wash", "Personal Care", 100],
+
+    ["Bucket", "Household Items", 150],
+    ["Mug", "Household Items", 50],
+    ["Storage Box", "Household Items", 180],
+    ["Dustbin", "Household Items", 220],
+
+    ["Detergent", "Cleaning Products", 160],
+    ["Dishwash Liquid", "Cleaning Products", 130],
+    ["Floor Cleaner", "Cleaning Products", 150],
+    ["Toilet Cleaner", "Cleaning Products", 120],
+
+    ["Baby Diapers", "Baby Care", 450],
+    ["Baby Wipes", "Baby Care", 180],
+    ["Baby Soap", "Baby Care", 100],
+    ["Baby Shampoo", "Baby Care", 150]
+
+];
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let cart = [];
+let wishlist = [];
+let currentCategory = "All";
+let discount = 0;
+let selectedRole = "";
+
+
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
+
+function displayProducts(list = products) {
+
+    const container = document.getElementById("products");
+
+    container.innerHTML = "";
+
+    list.forEach((p, index) => {
+
+        const name = p[0];
+        const category = p[1];
+        const price = p[2];
+
+        container.innerHTML += `
+
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=500&q=80">
+
+            <h3>${name}</h3>
+
+            <p>${category}</p>
+
+            <div class="rating">
+                ⭐⭐⭐⭐⭐
+            </div>
+
+            <p class="price">
+                ₹${price}
+            </p>
+
+            <button class="primary-btn"
+                    onclick="addToCart(${index})">
+
+                Add to Cart
+
+            </button>
+
+            <button
+                onclick="addWishlist(${index})">
+
+                ❤️ Wishlist
+
+            </button>
+
+        </div>
+
+        `;
+    });
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchProducts() {
+
+    const search =
+        document.getElementById("searchInput")
+        .value.toLowerCase();
+
+    let result = products.filter(p =>
+        p[0].toLowerCase().includes(search)
+    );
+
+    if (currentCategory !== "All") {
+
+        result = result.filter(
+            p => p[1] === currentCategory
+        );
+
+    }
+
+    displayProducts(result);
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function filterCategory(category) {
+
+    currentCategory = category;
+
+    if (category === "All") {
+
+        displayProducts(products);
+
+    } else {
+
+        displayProducts(
+            products.filter(p => p[1] === category)
+        );
+
+    }
+
+    showSection("home");
+}
+
+
+/* =========================
+   CART
+========================= */
+
+function addToCart(index) {
+
+    const product = products[index];
+
+    const existing = cart.find(
+        item => item.name === product[0]
+    );
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            name: product[0],
+            category: product[1],
+            price: product[2],
+            quantity: 1
+
+        });
+
+    }
+
+    updateCart();
+
+    alert(product[0] + " added to cart!");
+
+}
+
+
+function updateCart() {
+
+    const cartContainer =
+        document.getElementById("cartItems");
+
+    cartContainer.innerHTML = "";
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+
+        subtotal +=
+            item.price * item.quantity;
+
+        cartContainer.innerHTML += `
+
+        <div class="cart-item">
+
+            <div>
+
+                <h3>${item.name}</h3>
+
+                <p>₹${item.price} each</p>
+
+            </div>
+
+            <div class="quantity">
+
+                <button onclick="decreaseQty(${index})">
+                    -
+                </button>
+
+                <b>${item.quantity}</b>
+
+                <button onclick="increaseQty(${index})">
+                    +
+                </button>
+
+            </div>
+
+            <div>
+
+                ₹${item.price * item.quantity}
+
+            </div>
+
+            <button
+                onclick="removeFromCart(${index})">
+
+                ❌
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+
+    let delivery = subtotal > 0 ? 40 : 0;
+
+    if (subtotal >= 1000) {
+        delivery = 0;
+    }
+
+    const finalTotal =
+        subtotal - discount + delivery;
+
+
+    document.getElementById("subtotal")
+        .textContent = subtotal;
+
+    document.getElementById("discount")
+        .textContent = discount;
+
+    document.getElementById("deliveryCharge")
+        .textContent = delivery;
+
+    document.getElementById("finalTotal")
+        .textContent = finalTotal;
+
+    document.getElementById("cartCount")
+        .textContent =
+        cart.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+        );
+
+}
+
+
+function increaseQty(index) {
+
+    cart[index].quantity++;
+
+    updateCart();
+
+}
+
+
+function decreaseQty(index) {
+
+    if (cart[index].quantity > 1) {
+
+        cart[index].quantity--;
+
+    }
+
+    updateCart();
+
+}
+
+
+function removeFromCart(index) {
+
+    cart.splice(index, 1);
+
+    updateCart();
+
+}
+
+
+/* =========================
+   WISHLIST
+========================= */
+
+function addWishlist(index) {
+
+    const product = products[index];
+
+    if (!wishlist.includes(product[0])) {
+
+        wishlist.push(product[0]);
+
+        alert("Added to Wishlist!");
+
+    }
+
+    displayWishlist();
+
+}
+
+
+function displayWishlist() {
+
+    const container =
+        document.getElementById("wishlistItems");
+
+    container.innerHTML = "";
+
+    wishlist.forEach(name => {
+
+        const product =
+            products.find(p => p[0] === name);
+
+        container.innerHTML += `
+
+        <div class="product">
+
+            <h3>${product[0]}</h3>
+
+            <p>${product[1]}</p>
+
+            <p class="price">
+                ₹${product[2]}
+            </p>
+
+            <button class="primary-btn"
+                    onclick="addToCart(
+                    ${products.indexOf(product)}
+                    )">
+
+                Add to Cart
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================
+   COUPON
+========================= */
+
+function applyCoupon(code) {
+
+    let subtotal =
+        cart.reduce(
+            (sum, item) =>
+            sum + item.price * item.quantity,
+            0
+        );
+
+    if (code === "WELCOME10") {
+
+        if (subtotal >= 500) {
+
+            discount =
+                Math.round(subtotal * 0.10);
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "WELCOME10 applied successfully!";
+
+        } else {
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "Minimum order is ₹500.";
+
+        }
+
+    }
+
+
+    if (code === "GROCERY50") {
+
+        if (subtotal >= 800) {
+
+            discount = 50;
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "GROCERY50 applied successfully!";
+
+        } else {
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "Minimum order is ₹800.";
+
+        }
+
+    }
+
+
+    if (code === "SAVE20") {
+
+        if (subtotal >= 1000) {
+
+            discount =
+                Math.round(subtotal * 0.20);
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "SAVE20 applied successfully!";
+
+        } else {
+
+            document.getElementById(
+                "couponMessage"
+            ).textContent =
+                "Minimum order is ₹1000.";
+
+        }
+
+    }
+
+    updateCart();
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function saveProfile() {
+
+    const name =
+        document.getElementById("profileName").value;
+
+    const email =
+        document.getElementById("profileEmail").value;
+
+    const mobile =
+        document.getElementById("profileMobile").value;
+
+    const address =
+        document.getElementById("profileAddress").value;
+
+
+    if (!name || !email || !mobile || !address) {
+
+        document.getElementById(
+            "profileMessage"
+        ).textContent =
+            "Please fill all profile details.";
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "profileName",
+        name
+    );
+
+    localStorage.setItem(
+        "profileEmail",
+        email
+    );
+
+    localStorage.setItem(
+        "profileMobile",
+        mobile
+    );
+
+    localStorage.setItem(
+        "profileAddress",
+        address
+    );
+
+
+    document.getElementById(
+        "profileMessage"
+    ).textContent =
+        "Profile saved successfully!";
+
+}
+
+
+/* =========================
+   LOAD PROFILE
+========================= */
+
+function loadProfile() {
+
+    document.getElementById(
+        "profileName"
+    ).value =
+        localStorage.getItem("profileName") || "";
+
+    document.getElementById(
+        "profileEmail"
+    ).value =
+        localStorage.getItem("profileEmail") || "";
+
+    document.getElementById(
+        "profileMobile"
+    ).value =
+        localStorage.getItem("profileMobile") || "";
+
+    document.getElementById(
+        "profileAddress"
+    ).value =
+        localStorage.getItem("profileAddress") || "";
+
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function openCheckout() {
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty!");
+
+        return;
+
+    }
+
+
+    loadCheckoutDetails();
+
+    showSection("checkout");
+
+}
+
+
+function loadCheckoutDetails() {
+
+    document.getElementById(
+        "checkoutName"
+    ).textContent =
+        localStorage.getItem("profileName")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "checkoutEmail"
+    ).textContent =
+        localStorage.getItem("profileEmail")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "checkoutMobile"
+    ).textContent =
+        localStorage.getItem("profileMobile")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "checkoutAddress"
+    ).textContent =
+        localStorage.getItem("profileAddress")
+        || "Not Provided";
+
+
+    const container =
+        document.getElementById("checkoutItems");
+
+    container.innerHTML = "";
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+
+        subtotal +=
+            item.price * item.quantity;
+
+        container.innerHTML += `
+
+        <div class="cart-item">
+
+            <span>
+                ${item.name} × ${item.quantity}
+            </span>
+
+            <span>
+                ₹${item.price * item.quantity}
+            </span>
+
+        </div>
+
+        `;
+
+    });
+
+
+    let delivery = subtotal > 0 ? 40 : 0;
+
+    if (subtotal >= 1000) {
+        delivery = 0;
+    }
+
+    const total =
+        subtotal - discount + delivery;
+
+
+    document.getElementById(
+        "checkoutSubtotal"
+    ).textContent = subtotal;
+
+    document.getElementById(
+        "checkoutDiscount"
+    ).textContent = discount;
+
+    document.getElementById(
+        "checkoutDelivery"
+    ).textContent = delivery;
+
+    document.getElementById(
+        "checkoutTotal"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "paymentTotal"
+    ).textContent = total;
+
+
+    loadPaymentDetails();
+
+}
+
+
+/* =========================
+   PAYMENT PROFILE DETAILS
+========================= */
+
+function loadPaymentDetails() {
+
+    document.getElementById(
+        "paymentCustomerName"
+    ).textContent =
+        localStorage.getItem("profileName")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "paymentCustomerMobile"
+    ).textContent =
+        localStorage.getItem("profileMobile")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "paymentCustomerEmail"
+    ).textContent =
+        localStorage.getItem("profileEmail")
+        || "Not Provided";
+
+
+    document.getElementById(
+        "paymentCustomerAddress"
+    ).textContent =
+        localStorage.getItem("profileAddress")
+        || "Not Provided";
+
+}
+
+
+/* =========================
+   PAYMENT METHOD
+========================= */
+
+function changePaymentMethod() {
+
+    const method =
+        document.getElementById(
+            "paymentMethod"
+        ).value;
+
+
+    document.getElementById(
+        "upiBox"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "cardBox"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "bankBox"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "walletBox"
+    ).classList.add("hidden");
+
+
+    if (method === "UPI") {
+
+        document.getElementById(
+            "upiBox"
+        ).classList.remove("hidden");
+
+    }
+
+
+    if (
+        method === "Debit Card" ||
+        method === "Credit Card"
+    ) {
+
+        document.getElementById(
+            "cardBox"
+        ).classList.remove("hidden");
+
+    }
+
+
+    if (method === "Net Banking") {
+
+        document.getElementById(
+            "bankBox"
+        ).classList.remove("hidden");
+
+    }
+
+
+    if (method === "Wallet") {
+
+        document.getElementById(
+            "walletBox"
+        ).classList.remove("hidden");
+
+    }
+
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+function placeOrder() {
+
+    if (cart.length === 0) {
+
+        alert("Cart is empty!");
+
+        return;
+
+    }
+
+
+    const method =
+        document.getElementById(
+            "paymentMethod"
+        ).value;
+
+
+    if (!method) {
+
+        document.getElementById(
+            "paymentMessage"
+        ).textContent =
+            "Please select a payment method.";
+
+        return;
+
+    }
+
+
+    if (method === "UPI") {
+
+        const upi =
+            document.getElementById(
+                "upiId"
+            ).value;
+
+        if (!upi) {
+
+            alert("Please enter UPI ID.");
+
+            return;
+
+        }
+
+    }
+
+
+    if (
+        method === "Debit Card" ||
+        method === "Credit Card"
+    ) {
+
+        const card =
+            document.getElementById(
+                "cardNumber"
+            ).value;
+
+        const expiry =
+            document.getElementById(
+                "expiryDate"
+            ).value;
+
+        const cvv =
+            document.getElementById(
+                "cvv"
+            ).value;
+
+
+        if (!card || !expiry || !cvv) {
+
+            alert(
+                "Please enter all card details."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    if (method === "Net Banking") {
+
+        if (
+            !document.getElementById(
+                "bankName"
+            ).value
+        ) {
+
+            alert("Please select a bank.");
+
+            return;
+
+        }
+
+    }
+
+
+    if (method === "Wallet") {
+
+        if (
+            !document.getElementById(
+                "walletName"
+            ).value
+        ) {
+
+            alert("Please select a wallet.");
+
+            return;
+
+        }
+
+    }
+
+
+    let subtotal =
+        cart.reduce(
+            (sum, item) =>
+            sum + item.price * item.quantity,
+            0
+        );
+
+
+    let delivery =
+        subtotal >= 1000 ? 0 : 40;
+
+
+    let total =
+        subtotal - discount + delivery;
+
+
+    const orderID =
+        "QB" +
+        Math.floor(
+            100000 + Math.random() * 900000
+        );
+
+
+    document.getElementById(
+        "orderId"
+    ).textContent = orderID;
+
+
+    document.getElementById(
+        "confirmName"
+    ).textContent =
+        localStorage.getItem(
+            "profileName"
+        ) || "Customer";
+
+
+    document.getElementById(
+        "confirmPayment"
+    ).textContent = method;
+
+
+    document.getElementById(
+        "confirmAmount"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "paymentMessage"
+    ).textContent =
+        "Payment successful!";
+
+
+    saveOrder(
+        orderID,
+        method,
+        total
+    );
+
+
+    cart = [];
+
+    discount = 0;
+
+    updateCart();
+
+    showSection("confirmation");
+
+}
+
+
+/* =========================
+   SAVE ORDER
+========================= */
+
+function saveOrder(id, method, amount) {
+
+    const orders =
+        JSON.parse(
+            localStorage.getItem(
+                "orders"
+            ) || "[]"
+        );
+
+
+    orders.push({
+
+        id: id,
+
+        customer:
+            localStorage.getItem(
+                "profileName"
+            ),
+
+        payment: method,
+
+        amount: amount,
+
+        status: "Order Placed",
+
+        date: new Date().toLocaleString()
+
+    });
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+    displayOrders();
+
+}
+
+
+/* =========================
+   DISPLAY ORDERS
+========================= */
+
+function displayOrders() {
+
+    const orders =
+        JSON.parse(
+            localStorage.getItem(
+                "orders"
+            ) || "[]"
+        );
+
+
+    const container =
+        document.getElementById(
+            "orderHistory"
+        );
+
+
+    if (orders.length === 0) {
+
+        container.innerHTML =
+            "<p>No orders placed yet.</p>";
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    orders.reverse().forEach(order => {
+
+        container.innerHTML += `
+
+        <div class="profile-summary">
+
+            <h3>Order ${order.id}</h3>
+
+            <p>
+                Amount: ₹${order.amount}
+            </p>
+
+            <p>
+                Payment: ${order.payment}
+            </p>
+
+            <p>
+                Status: ${order.status}
+            </p>
+
+            <p>
+                Date: ${order.date}
+            </p>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================
+   REVIEW
+========================= */
+
+function submitReview() {
+
+    const product =
+        document.getElementById(
+            "reviewProduct"
+        ).value;
+
+    const rating =
+        document.getElementById(
+            "reviewRating"
+        ).value;
+
+    const review =
+        document.getElementById(
+            "reviewText"
+        ).value;
+
+
+    if (!product || !review) {
+
+        document.getElementById(
+            "reviewMessage"
+        ).textContent =
+            "Please enter product and review.";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "reviewMessage"
+    ).textContent =
+        `Thank you! ${rating}-star review submitted for ${product}.`;
+
+}
+
+
+/* =========================
+   SUPPORT
+========================= */
+
+function submitSupport() {
+
+    const request =
+        document.getElementById(
+            "supportRequest"
+        ).value;
+
+
+    if (!request) {
+
+        document.getElementById(
+            "supportMessage"
+        ).textContent =
+            "Please enter your request.";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "supportMessage"
+    ).textContent =
+        "Your request has been submitted successfully.";
+
+}
+
+
+/* =========================
+   EMPLOYEE LOGIN
+========================= */
+
+function updateEmployeeStatus() {
+
+    const status =
+        document.getElementById(
+            "employeeStatus"
+        ).value;
+
+
+    document.getElementById(
+        "employeeMessage"
+    ).textContent =
+        "Order status updated to: " + status;
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin(role) {
+
+    selectedRole = role;
+
+    document.getElementById(
+        "loginTitle"
+    ).textContent =
+        role + " Login";
+
+
+    document.getElementById(
+        "loginModal"
+    ).style.display =
+        "flex";
+
+}
+
+
+function closeLogin() {
+
+    document.getElementById(
+        "loginModal"
+    ).style.display =
+        "none";
+
+}
+
+
+function login() {
+
+    const username =
+        document.getElementById(
+            "loginUsername"
+        ).value;
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+
+    if (!username || !password) {
+
+        document.getElementById(
+            "loginMessage"
+        ).textContent =
+            "Please enter username and password.";
+
+        return;
+
+    }
+
+
+    closeLogin();
+
+
+    if (selectedRole === "Employee") {
+
+        showSection("employee");
+
+    }
+
+    else if (
+        selectedRole === "Store Manager"
+    ) {
+
+        showSection("manager");
+
+    }
+
+    else {
+
+        showSection("home");
+
+    }
+
+}
+
+
+/* =========================
+   SECTION NAVIGATION
+========================= */
+
+function showSection(id) {
+
+    const sections =
+        document.querySelectorAll(
+            ".container > section"
+        );
+
+
+    sections.forEach(section => {
+
+        section.classList.add("hidden");
+
+    });
+
+
+    const selected =
+        document.getElementById(id);
+
+
+    if (selected) {
+
+        selected.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    if (id === "cart") {
+
+        updateCart();
+
+    }
+
+
+    if (id === "wishlist") {
+
+        displayWishlist();
+
+    }
+
+
+    if (id === "orders") {
+
+        displayOrders();
+
+    }
+
+
+    if (id === "checkout") {
+
+        loadCheckoutDetails();
+
+    }
+
+
+    if (id === "payment") {
+
+        loadPaymentDetails();
+
+        document.getElementById(
+            "paymentTotal"
+        ).textContent =
+            document.getElementById(
+                "checkoutTotal"
+            ).textContent;
+
+    }
+
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+displayProducts();
+
+loadProfile();
+
+updateCart();
+
+displayOrders();
+
+</script>
+
+</body>
+</html>

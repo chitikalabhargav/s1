@@ -1,0 +1,109 @@
+<html>
+<head>
+    <title>Login Page</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #dashboard {
+            display: none;
+        }
+
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box" id="login">
+        <h2>Login Page</h2>
+
+        <input type="text" id="username" placeholder="Enter Username">
+        <br>
+
+        <input type="password" id="password" placeholder="Enter Password">
+        <br>
+
+        <button onclick="loginUser()">Login</button>
+
+        <p id="error"></p>
+    </div>
+
+    <div class="box" id="dashboard">
+        <h2 id="welcome"></h2>
+        <h3>User Dashboard</h3>
+
+        <ul style="text-align:left">
+            <li>My Profile</li>
+            <li>My Courses</li>
+            <li>My Results</li>
+            <li>Settings</li>
+            <li>Help and Support</li>
+        </ul>
+
+        <br>
+        <button onclick="logoutUser()">Logout</button>
+    </div>
+
+    <script>
+        function loginUser() {
+            let username =
+                document.getElementById("username").value;
+
+            let password =
+                document.getElementById("password").value;
+
+            if (username === "Rohit" && password === "1234") {
+                document.getElementById("login").style.display = "none";
+
+                document.getElementById("dashboard").style.display = "block";
+
+                document.getElementById("welcome").innerHTML =
+                    "Welcome, " + username + "!";
+            } else {
+                document.getElementById("error").innerHTML =
+                    "Invalid Username or Password!";
+            }
+        }
+
+        function logoutUser() {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("login").style.display = "block";
+
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("error").innerHTML = "";
+        }
+    </script>
+
+</body>
+</html>

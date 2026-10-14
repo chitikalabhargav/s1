@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Layout</title>
+    <style>
+.container{
+border:1px solid red;
+display:grid;
+grid-row:20%, 30%, 30%, 20%;
+grid-column: 25%, 25%, 25%, 25%;
+
+}
+
+.sec1{
+background-color:blue;
+height:20vh;
+grid-row:1/2;
+grid-column:1/5;
+
+}
+.sec2{
+background-color:red;
+height:30vh;
+grid-row:2/3;
+grid-column:1/2;
+}
+.sec3{
+background-color:green;
+height:30vh;
+grid-row:2/3;
+grid-column:2/3;
+}
+.sec4{
+background-color:orange;
+height:30vh;
+grid-row:2/3;
+grid-column:3/4;
+
+}
+.sec5{
+background-color:yellow;
+height:60vh;
+grid-row:2/3;
+grid-column:4/4;
+
+}
+.sec6{
+background-color:violet;
+height:30vh;
+grid-row:3/4;
+grid-column:1/4;
+}
+.sec7{
+background-color:grey;
+height:20vh;
+grid-row:4/5;
+grid-column:1/5;
+
+}
+
+
+</style>
+
+</head>
+<body>
+<div class="container">
+     <div class="sec1">Section 1</div>
+     <div class="sec2">Section 2</div>
+     <div class="sec3">Section 3</div>
+     <div class="sec4">Section 4</div>
+     <div class="sec5">Section 5</div>
+     <div class="sec6">Section 6</div>
+     <div class="sec7">Section 7</div>
+     
+</div>
+    
+</body>
+</html>

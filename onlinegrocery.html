@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FreshKart - Online Grocery Store</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f7f5;
+    color:#222;
+}
+
+header{
+    background:#0b8f45;
+    color:white;
+    padding:15px 5%;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.search{
+    flex:1;
+    display:flex;
+}
+
+.search input{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:8px 0 0 8px;
+    font-size:15px;
+}
+
+.search button{
+    border:none;
+    padding:0 18px;
+    background:#ffd814;
+    cursor:pointer;
+    border-radius:0 8px 8px 0;
+}
+
+.header-btn{
+    background:transparent;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:15px;
+}
+
+nav{
+    background:white;
+    padding:12px 5%;
+    display:flex;
+    gap:20px;
+    overflow:auto;
+    box-shadow:0 2px 8px #ddd;
+}
+
+nav button{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.hero{
+    margin:25px 5%;
+    min-height:280px;
+    border-radius:20px;
+    padding:50px;
+    color:white;
+    background:
+      linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.15)),
+      url("https://loremflickr.com/1200/450/grocery,vegetables?lock=500")
+      center/cover;
+}
+
+.hero h1{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:19px;
+    margin-bottom:20px;
+}
+
+.btn{
+    background:#0b8f45;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.yellow{
+    background:#ffd814;
+    color:#222;
+}
+
+.section{
+    padding:20px 5%;
+}
+
+.section h2{
+    margin-bottom:20px;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:18px;
+}
+
+.category{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+    cursor:pointer;
+    box-shadow:0 2px 8px #ddd;
+    transition:.3s;
+}
+
+.category:hover{
+    transform:translateY(-6px);
+}
+
+.category img{
+    width:100px;
+    height:80px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.toolbar select{
+    padding:10px;
+    border-radius:8px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.product{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 3px 10px #ddd;
+    transition:.4s;
+    perspective:1000px;
+}
+
+.product:hover{
+    transform:translateY(-8px);
+}
+
+.product img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:.5s;
+    transform:translateZ(20px);
+    filter:drop-shadow(0 10px 8px rgba(0,0,0,.2));
+}
+
+.product:hover img{
+    transform:rotateY(8deg) translateZ(35px) scale(1.03);
+}
+
+.product h3{
+    margin:12px 0 5px;
+}
+
+.category-name{
+    color:#777;
+    font-size:13px;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+    color:#0b8f45;
+    margin:8px 0;
+}
+
+.old-price{
+    text-decoration:line-through;
+    color:#999;
+    font-size:14px;
+    margin-left:5px;
+}
+
+.stock{
+    font-size:13px;
+    color:#16843c;
+    margin-bottom:10px;
+}
+
+.product-actions{
+    display:flex;
+    gap:7px;
+}
+
+.product-actions button{
+    flex:1;
+}
+
+.wishlist{
+    width:42px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.cart-panel{
+    position:fixed;
+    right:-430px;
+    top:0;
+    width:400px;
+    height:100%;
+    background:white;
+    z-index:2000;
+    box-shadow:-5px 0 20px #aaa;
+    padding:20px;
+    transition:.4s;
+    overflow:auto;
+}
+
+.cart-panel.open{
+    right:0;
+}
+
+.close{
+    float:right;
+    border:none;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.cart-item{
+    display:flex;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.cart-item img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.qty{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:8px;
+}
+
+.qty button{
+    width:28px;
+    height:28px;
+    border:none;
+    background:#0b8f45;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.cart-total{
+    font-size:22px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:1500;
+}
+
+.overlay.show{
+    display:block;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    width:90%;
+    max-width:650px;
+    max-height:90vh;
+    overflow:auto;
+    z-index:2500;
+    padding:25px;
+    border-radius:15px;
+}
+
+.modal.show{
+    display:block;
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+    width:100%;
+    padding:12px;
+    margin:7px 0 12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.modal h2{
+    margin-bottom:15px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.coupon{
+    display:flex;
+    gap:8px;
+    margin:15px 0;
+}
+
+.coupon input{
+    margin:0;
+}
+
+.delivery-box{
+    background:#f1fff6;
+    border:1px solid #bde8ca;
+    padding:15px;
+    border-radius:10px;
+    margin:15px 0;
+}
+
+.payment{
+    border:1px solid #ddd;
+    padding:12px;
+    border-radius:8px;
+    margin:8px 0;
+}
+
+.success{
+    text-align:center;
+    padding:30px;
+}
+
+.success-icon{
+    font-size:65px;
+}
+
+.tracking{
+    margin-top:20px;
+}
+
+.track-step{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:13px;
+    border-left:4px solid #ddd;
+}
+
+.track-step.active{
+    border-left-color:#0b8f45;
+    color:#0b8f45;
+    font-weight:bold;
+}
+
+.recommendations{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.rec{
+    background:white;
+    padding:10px;
+    border-radius:12px;
+    box-shadow:0 2px 8px #ddd;
+}
+
+.rec img{
+    width:100%;
+    height:130px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.admin-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.admin-table th,
+.admin-table td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:left;
+}
+
+.admin-table input{
+    width:90px;
+    padding:6px;
+}
+
+.badge{
+    padding:5px 8px;
+    border-radius:12px;
+    background:#e8f8ee;
+    color:#087738;
+    font-size:12px;
+}
+
+footer{
+    background:#17231c;
+    color:white;
+    padding:40px 5%;
+    margin-top:40px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+}
+
+footer h3{
+    margin-bottom:12px;
+}
+
+footer p{
+    color:#ccc;
+    margin:7px 0;
+}
+
+@media(max-width:700px){
+    header{
+        flex-wrap:wrap;
+    }
+
+    .search{
+        order:3;
+        flex-basis:100%;
+    }
+
+    .hero{
+        padding:30px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .cart-panel{
+        width:95%;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">🛒 FreshKart</div>
+
+<div class="search">
+<input id="searchInput"
+       placeholder="Search for fruits, milk, rice, snacks..."
+       oninput="renderProducts()">
+
+<button onclick="renderProducts()">🔍</button>
+</div>
+
+<button class="header-btn" onclick="openProfile()">👤 Profile</button>
+<button class="header-btn" onclick="openOrders()">📦 Orders</button>
+<button class="header-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+
+</header>
+
+<nav>
+<button onclick="filterCategory('All')">All</button>
+<button onclick="filterCategory('Fruits & Vegetables')">🥦 Fruits & Vegetables</button>
+<button onclick="filterCategory('Dairy & Eggs')">🥛 Dairy & Eggs</button>
+<button onclick="filterCategory('Rice, Atta & Grains')">🌾 Rice & Grains</button>
+<button onclick="filterCategory('Pulses')">🫘 Pulses</button>
+<button onclick="filterCategory('Oil & Ghee')">🫗 Oil & Ghee</button>
+<button onclick="filterCategory('Masala & Spices')">🌶️ Masala</button>
+<button onclick="filterCategory('Bakery')">🍞 Bakery</button>
+<button onclick="filterCategory('Snacks & Biscuits')">🍪 Snacks</button>
+<button onclick="filterCategory('Beverages')">🥤 Beverages</button>
+<button onclick="filterCategory('Personal Care')">🧴 Personal Care</button>
+<button onclick="filterCategory('Household')">🧹 Household</button>
+</nav>
+
+<section class="hero">
+
+<h1>Fresh Groceries Delivered 🛒</h1>
+
+<p>
+Fresh products, great prices and convenient delivery at your doorstep.
+</p>
+
+<button class="btn yellow" onclick="scrollProducts()">
+Shop Now
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Shop by Category</h2>
+
+<div class="category-grid" id="categoryGrid"></div>
+
+</section>
+
+<section class="section" id="productsSection">
+
+<div class="toolbar">
+
+<h2 id="productTitle">All Products</h2>
+
+<select onchange="sortProducts(this.value)">
+<option value="default">Sort Products</option>
+<option value="low">Price: Low to High</option>
+<option value="high">Price: High to Low</option>
+<option value="name">Name</option>
+</select>
+
+</div>
+
+<div class="products" id="productGrid"></div>
+
+</section>
+
+<section class="section">
+
+<h2>⭐ Recommended For You</h2>
+
+<div class="recommendations" id="recommendations"></div>
+
+</section>
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+<h3>🛒 FreshKart</h3>
+<p>Your online grocery shopping partner.</p>
+<p>Fresh products at affordable prices.</p>
+</div>
+
+<div>
+<h3>Customer Service</h3>
+<p>📞 1800-123-4567</p>
+<p>✉️ support@freshkart.example</p>
+<p>Mon - Sun: 8 AM - 10 PM</p>
+</div>
+
+<div>
+<h3>Quick Links</h3>
+<p onclick="openProfile()">My Profile</p>
+<p onclick="openOrders()">My Orders</p>
+<p onclick="openCart()">Shopping Cart</p>
+<p onclick="openAbout()">About Us</p>
+</div>
+
+<div>
+<h3>Admin</h3>
+<p onclick="openAdmin()">Inventory Management</p>
+</div>
+
+</div>
+
+<br>
+<center>
+<p>© 2026 FreshKart. Educational Online Grocery Store Project.</p>
+</center>
+
+</footer>
+
+
+<!-- CART -->
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<div class="cart-panel" id="cartPanel">
+
+<button class="close" onclick="closeCart()">×</button>
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<div class="coupon">
+
+<input id="couponInput" placeholder="Coupon code">
+
+<button class="btn" onclick="applyCoupon()">Apply</button>
+
+</div>
+
+<p id="couponMessage"></p>
+
+<div class="cart-total">
+Subtotal: ₹<span id="subtotal">0</span>
+<br>
+Discount: ₹<span id="discount">0</span>
+<br>
+Delivery: ₹<span id="delivery">0</span>
+<br>
+Total: ₹<span id="grandTotal">0</span>
+</div>
+
+<button class="btn" style="width:100%" onclick="openCheckout()">
+Proceed to Checkout
+</button>
+
+</div>
+
+
+<!-- CHECKOUT -->
+
+<div class="modal" id="checkoutModal">
+
+<button class="close" onclick="closeAll()">×</button>
+
+<h2>🧾 Checkout</h2>
+
+<h3>Delivery Address</h3>
+
+<input id="checkoutName" placeholder="Full Name">
+
+<input id="checkoutPhone" placeholder="Phone Number">
+
+<textarea id="checkoutAddress"
+placeholder="Complete delivery address"></textarea>
+
+<div class="delivery-box">
+
+<h3>🚚 Schedule Delivery</h3>
+
+<label>Select Date</label>
+
+<input type="date" id="deliveryDate">
+
+<label>Select Time Slot</label>
+
+<select id="deliverySlot">
+
+<option>Morning - 8 AM to 11 AM</option>
+<option>Afternoon - 12 PM to 3 PM</option>
+<option>Evening - 4 PM to 7 PM</option>
+<option>Night - 7 PM to 10 PM</option>
+
+</select>
+
+</div>
+
+<h3>Discount</h3>
+
+<p>Available coupons:</p>
+<p>
+<b>FRESH10</b> - 10% discount
+<br>
+<b>SAVE50</b> - ₹50 discount
+<br>
+<b>WELCOME20</b> - 20% discount
+</p>
+
+<br>
+
+<h3>Payment Method</h3>
+
+<div class="payment">
+<label>
+<input type="radio" name="payment" value="UPI" checked>
+UPI
+</label>
+</div>
+
+<div class="payment">
+<label>
+<input type="radio" name="payment" value="Card">
+Debit / Credit Card
+</label>
+</div>
+
+<div class="payment">
+<label>
+<input type="radio" name="payment" value="Net Banking">
+Net Banking
+</label>
+</div>
+
+<div class="payment">
+<label>
+<input type="radio" name="payment" value="COD">
+Cash on Delivery
+</label>
+</div>
+
+<div id="paymentFields"></div>
+
+<br>
+
+<button class="btn" style="width:100%" onclick="makePayment()">
+Place Order
+</button>
+
+</div>
+
+
+<!-- SUCCESS -->
+
+<div class="modal" id="successModal">
+
+<div class="success">
+
+<div class="success-icon">✅</div>
+
+<h1>Payment Successful!</h1>
+
+<h2>Thank You for Shopping!</h2>
+
+<p>Have a nice day 😊</p>
+
+<br>
+
+<p>
+Your order has been successfully placed.
+</p>
+
+<p>
+Order ID:
+<strong id="successOrderId"></strong>
+</p>
+
+<p>
+Delivery:
+<strong id="successDelivery"></strong>
+</p>
+
+<br>
+
+<button class="btn" onclick="closeAll();openOrders()">
+View My Orders
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PROFILE -->
+
+<div class="modal" id="profileModal">
+
+<button class="close" onclick="closeAll()">×</button>
+
+<h2>👤 My Profile</h2>
+
+<label>Name</label>
+<input id="profileName">
+
+<label>Email</label>
+<input id="profileEmail">
+
+<label>Phone</label>
+<input id="profilePhone">
+
+<h3>Saved Address</h3>
+
+<textarea id="profileAddress"></textarea>
+
+<button class="btn" onclick="saveProfile()">
+Save Information
+</button>
+
+<p id="profileMessage"></p>
+
+<hr>
+
+<h3>📍 Address Book</h3>
+
+<div id="addressList"></div>
+
+<input id="newAddress" placeholder="Add new address">
+
+<button class="btn" onclick="addAddress()">
+Add Address
+</button>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div class="modal" id="ordersModal">
+
+<button class="close" onclick="closeAll()">×</button>
+
+<h2>📦 My Orders</h2>
+
+<div id="ordersList"></div>
+
+</div>
+
+
+<!-- ABOUT -->
+
+<div class="modal" id="aboutModal">
+
+<button class="close" onclick="closeAll()">×</button>
+
+<h2>About FreshKart</h2>
+
+<p>
+FreshKart is an educational online grocery store project designed
+to demonstrate how an e-commerce grocery platform works.
+</p>
+
+<br>
+
+<h3>Our Features</h3>
+
+<p>✔ Product browsing</p>
+<p>✔ Search and categories</p>
+<p>✔ Shopping cart</p>
+<p>✔ Discounts and coupons</p>
+<p>✔ Delivery scheduling</p>
+<p>✔ Order tracking</p>
+<p>✔ Product recommendations</p>
+<p>✔ Inventory management</p>
+<p>✔ Customer profile</p>
+<p>✔ Multiple payment options</p>
+
+<br>
+
+<p>
+This project uses HTML, CSS and JavaScript with browser localStorage.
+It is a front-end educational demonstration and does not process
+real payments.
+</p>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div class="modal" id="adminModal">
+
+<button class="close" onclick="closeAll()">×</button>
+
+<h2>⚙️ Admin Dashboard</h2>
+
+<div class="category-grid">
+
+<div class="category">
+<h2 id="adminProducts">0</h2>
+<p>Total Products</p>
+</div>
+
+<div class="category">
+<h2 id="adminStock">0</h2>
+<p>Available Products</p>
+</div>
+
+<div class="category">
+<h2 id="adminLow">0</h2>
+<p>Low Stock</p>
+</div>
+
+<div class="category">
+<h2 id="adminOrders">0</h2>
+<p>Total Orders</p>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="addProduct()">
+➕ Add Product
+</button>
+
+<input
+id="adminSearch"
+placeholder="Search product..."
+oninput="renderAdmin()"
+>
+
+<div style="overflow:auto">
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Available</th>
+<th>Discount</th>
+</tr>
+
+</thead>
+
+<tbody id="adminTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<script>
+
+const products = [
+
+{id:1,name:"Fresh Apples",cat:"Fruits & Vegetables",price:120,stock:25,img:"apple,fruit"},
+{id:2,name:"Bananas",cat:"Fruits & Vegetables",price:55,stock:40,img:"banana,fruit"},
+{id:3,name:"Oranges",cat:"Fruits & Vegetables",price:80,stock:30,img:"orange,fruit"},
+{id:4,name:"Mangoes",cat:"Fruits & Vegetables",price:100,stock:22,img:"mango,fruit"},
+{id:5,name:"Tomatoes",cat:"Fruits & Vegetables",price:45,stock:35,img:"tomato,vegetable"},
+{id:6,name:"Potatoes",cat:"Fruits & Vegetables",price:40,stock:50,img:"potato,vegetable"},
+{id:7,name:"Onions",cat:"Fruits & Vegetables",price:42,stock:45,img:"onion,vegetable"},
+{id:8,name:"Carrots",cat:"Fruits & Vegetables",price:60,stock:28,img:"carrot,vegetable"},
+{id:9,name:"Spinach",cat:"Fruits & Vegetables",price:35,stock:20,img:"spinach,vegetable"},
+{id:10,name:"Grapes",cat:"Fruits & Vegetables",price:90,stock:18,img:"grapes,fruit"},
+
+{id:11,name:"Fresh Milk 1L",cat:"Dairy & Eggs",price:58,stock:30,img:"milk"},
+{id:12,name:"Curd 500g",cat:"Dairy & Eggs",price:45,stock:25,img:"yogurt"},
+{id:13,name:"Butter 500g",cat:"Dairy & Eggs",price:260,stock:12,img:"butter"},
+{id:14,name:"Cheese 200g",cat:"Dairy & Eggs",price:145,stock:15,img:"cheese"},
+{id:15,name:"Eggs 12 Pack",cat:"Dairy & Eggs",price:85,stock:30,img:"eggs"},
+{id:16,name:"Paneer 200g",cat:"Dairy & Eggs",price:90,stock:20,img:"paneer"},
+{id:17,name:"Lassi",cat:"Dairy & Eggs",price:40,stock:25,img:"lassi"},
+{id:18,name:"Cream",cat:"Dairy & Eggs",price:110,stock:10,img:"cream"},
+
+{id:19,name:"Basmati Rice 5kg",cat:"Rice, Atta & Grains",price:550,stock:15,img:"basmati,rice"},
+{id:20,name:"Sona Masoori Rice 5kg",cat:"Rice, Atta & Grains",price:420,stock:20,img:"rice"},
+{id:21,name:"Wheat Atta 5kg",cat:"Rice, Atta & Grains",price:280,stock:25,img:"wheat,flour"},
+{id:22,name:"Ragi Flour 1kg",cat:"Rice, Atta & Grains",price:80,stock:18,img:"ragi,flour"},
+{id:23,name:"Maida 1kg",cat:"Rice, Atta & Grains",price:55,stock:20,img:"flour"},
+{id:24,name:"Poha 1kg",cat:"Rice, Atta & Grains",price:75,stock:22,img:"poha"},
+{id:25,name:"Oats 1kg",cat:"Rice, Atta & Grains",price:180,stock:16,img:"oats"},
+
+{id:26,name:"Toor Dal 1kg",cat:"Pulses",price:165,stock:25,img:"toor,dal"},
+{id:27,name:"Moong Dal 1kg",cat:"Pulses",price:145,stock:20,img:"moong,dal"},
+{id:28,name:"Masoor Dal 1kg",cat:"Pulses",price:130,stock:18,img:"masoor,dal"},
+{id:29,name:"Chana Dal 1kg",cat:"Pulses",price:115,stock:22,img:"chana,dal"},
+{id:30,name:"Rajma 1kg",cat:"Pulses",price:150,stock:15,img:"rajma"},
+{id:31,name:"Black Chana 1kg",cat:"Pulses",price:105,stock:20,img:"black,chana"},
+
+{id:32,name:"Sunflower Oil 1L",cat:"Oil & Ghee",price:140,stock:25,img:"sunflower,oil"},
+{id:33,name:"Groundnut Oil 1L",cat:"Oil & Ghee",price:175,stock:20,img:"groundnut,oil"},
+{id:34,name:"Mustard Oil 1L",cat:"Oil & Ghee",price:155,stock:18,img:"mustard,oil"},
+{id:35,name:"Pure Ghee 1L",cat:"Oil & Ghee",price:650,stock:10,img:"ghee"},
+{id:36,name:"Coconut Oil 500ml",cat:"Oil & Ghee",price:150,stock:15,img:"coconut,oil"},
+
+{id:37,name:"Turmeric Powder",cat:"Masala & Spices",price:45,stock:30,img:"turmeric,powder"},
+{id:38,name:"Red Chilli Powder",cat:"Masala & Spices",price:55,stock:25,img:"chilli,powder"},
+{id:39,name:"Coriander Powder",cat:"Masala & Spices",price:50,stock:25,img:"coriander,powder"},
+{id:40,name:"Garam Masala",cat:"Masala & Spices",price:75,stock:20,img:"garam,masala"},
+{id:41,name:"Black Pepper",cat:"Masala & Spices",price:95,stock:15,img:"black,pepper"},
+{id:42,name:"Cumin Seeds",cat:"Masala & Spices",price:80,stock:18,img:"cumin,seeds"},
+
+{id:43,name:"White Bread",cat:"Bakery",price:40,stock:25,img:"bread"},
+{id:44,name:"Brown Bread",cat:"Bakery",price:50,stock:20,img:"brown,bread"},
+{id:45,name:"Burger Buns",cat:"Bakery",price:55,stock:18,img:"burger,buns"},
+{id:46,name:"Chocolate Cake",cat:"Bakery",price:350,stock:8,img:"chocolate,cake"},
+{id:47,name:"Cream Biscuits",cat:"Bakery",price:40,stock:30,img:"biscuits"},
+
+{id:48,name:"Potato Chips",cat:"Snacks & Biscuits",price:30,stock:40,img:"potato,chips"},
+{id:49,name:"Nachos",cat:"Snacks & Biscuits",price:65,stock:25,img:"nachos"},
+{id:50,name:"Cookies",cat:"Snacks & Biscuits",price:70,stock:30,img:"cookies"},
+{id:51,name:"Namkeen",cat:"Snacks & Biscuits",price:90,stock:20,img:"namkeen"},
+{id:52,name:"Popcorn",cat:"Snacks & Biscuits",price:45,stock:25,img:"popcorn"},
+{id:53,name:"Chocolate",cat:"Snacks & Biscuits",price:100,stock:22,img:"chocolate"},
+
+{id:54,name:"Coca Cola",cat:"Beverages",price:45,stock:30,img:"coca,cola"},
+{id:55,name:"Pepsi",cat:"Beverages",price:45,stock:25,img:"pepsi"},
+{id:56,name:"Orange Juice",cat:"Beverages",price:120,stock:20,img:"orange,juice"},
+{id:57,name:"Mango Juice",cat:"Beverages",price:110,stock:20,img:"mango,juice"},
+{id:58,name:"Green Tea",cat:"Beverages",price:180,stock:12,img:"green,tea"},
+{id:59,name:"Coffee",cat:"Beverages",price:250,stock:15,img:"coffee"},
+{id:60,name:"Mineral Water",cat:"Beverages",price:25,stock:40,img:"water,bottle"},
+
+{id:61,name:"Frozen Peas",cat:"Frozen Food",price:110,stock:15,img:"frozen,peas"},
+{id:62,name:"French Fries",cat:"Frozen Food",price:150,stock:12,img:"french,fries"},
+{id:63,name:"Frozen Corn",cat:"Frozen Food",price:100,stock:15,img:"frozen,corn"},
+{id:64,name:"Ice Cream",cat:"Frozen Food",price:220,stock:10,img:"ice,cream"},
+
+{id:65,name:"Shampoo",cat:"Personal Care",price:220,stock:18,img:"shampoo"},
+{id:66,name:"Soap",cat:"Personal Care",price:40,stock:40,img:"soap"},
+{id:67,name:"Toothpaste",cat:"Personal Care",price:100,stock:30,img:"toothpaste"},
+{id:68,name:"Toothbrush",cat:"Personal Care",price:60,stock:30,img:"toothbrush"},
+{id:69,name:"Face Wash",cat:"Personal Care",price:180,stock:15,img:"face,wash"},
+{id:70,name:"Hand Wash",cat:"Personal Care",price:100,stock:20,img:"hand,wash"},
+
+{id:71,name:"Dishwash Liquid",cat:"Household",price:110,stock:25,img:"dishwash"},
+{id:72,name:"Floor Cleaner",cat:"Household",price:150,stock:20,img:"floor,cleaner"},
+{id:73,name:"Laundry Detergent",cat:"Household",price:220,stock:20,img:"detergent"},
+{id:74,name:"Toilet Cleaner",cat:"Household",price:130,stock:18,img:"toilet,cleaner"},
+{id:75,name:"Garbage Bags",cat:"Household",price:90,stock:25,img:"garbage,bags"},
+{id:76,name:"Cleaning Sponge",cat:"Household",price:50,stock:30,img:"sponge"},
+
+{id:77,name:"Baby Diapers",cat:"Baby Care",price:550,stock:10,img:"baby,diapers"},
+{id:78,name:"Baby Soap",cat:"Baby Care",price:90,stock:15,img:"baby,soap"},
+{id:79,name:"Baby Shampoo",cat:"Baby Care",price:180,stock:12,img:"baby,shampoo"},
+{id:80,name:"Baby Powder",cat:"Baby Care",price:150,stock:15,img:"baby,powder"},
+
+{id:81,name:"Dog Food",cat:"Pet Care",price:450,stock:10,img:"dog,food"},
+{id:82,name:"Cat Food",cat:"Pet Care",price:400,stock:10,img:"cat,food"},
+{id:83,name:"Pet Shampoo",cat:"Pet Care",price:250,stock:8,img:"pet,shampoo"},
+
+{id:84,name:"Notebook",cat:"Stationery",price:50,stock:30,img:"notebook"},
+{id:85,name:"Pens Pack",cat:"Stationery",price:60,stock:40,img:"pens"},
+{id:86,name:"Pencils Pack",cat:"Stationery",price:40,stock:35,img:"pencils"},
+{id:87,name:"Markers",cat:"Stationery",price:90,stock:20,img:"markers"},
+{id:88,name:"Glue",cat:"Stationery",price:35,stock:25,img:"glue"},
+{id:89,name:"Scissors",cat:"Stationery",price:70,stock:20,img:"scissors"},
+{id:90,name:"Sketch Pens",cat:"Stationery",price:100,stock:15,img:"sketch,pens"}
+
+];
+
+
+let cart=JSON.parse(localStorage.getItem("freshkart_cart")||"[]");
+let wishlist=JSON.parse(localStorage.getItem("freshkart_wishlist")||"[]");
+let orders=JSON.parse(localStorage.getItem("freshkart_orders")||"[]");
+let addresses=JSON.parse(localStorage.getItem("freshkart_addresses")||"[]");
+let profile=JSON.parse(localStorage.getItem("freshkart_profile")||"{}");
+
+let selectedCategory="All";
+let sortType="default";
+let discountAmount=0;
+let appliedCoupon="";
+
+
+const categories=[
+"Fruits & Vegetables",
+"Dairy & Eggs",
+"Rice, Atta & Grains",
+"Pulses",
+"Oil & Ghee",
+"Masala & Spices",
+"Bakery",
+"Snacks & Biscuits",
+"Beverages",
+"Frozen Food",
+"Personal Care",
+"Household"
+];
+
+
+function image(product){
+
+return "https://loremflickr.com/500/400/"
++product.img
++"?lock="+product.id;
+
+}
+
+
+function renderCategories(){
+
+let html="";
+
+categories.forEach((cat,index)=>{
+
+let p=products.find(x=>x.cat===cat);
+
+html+=`
+
+<div class="category"
+onclick="filterCategory('${cat}')">
+
+<img src="${image(p)}">
+
+<h4>${cat}</h4>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("categoryGrid").innerHTML=html;
+
+}
+
+
+function renderProducts(){
+
+let text=document.getElementById("searchInput").value.toLowerCase();
+
+let list=products.filter(p=>{
+
+let categoryMatch=
+selectedCategory==="All" ||
+p.cat===selectedCategory;
+
+let searchMatch=
+p.name.toLowerCase().includes(text) ||
+p.cat.toLowerCase().includes(text);
+
+return categoryMatch && searchMatch;
+
+});
+
+
+if(sortType==="low")
+list.sort((a,b)=>a.price-b.price);
+
+if(sortType==="high")
+list.sort((a,b)=>b.price-a.price);
+
+if(sortType==="name")
+list.sort((a,b)=>a.name.localeCompare(b.name));
+
+
+document.getElementById("productTitle").innerText=
+selectedCategory==="All"
+?"All Products"
+:selectedCategory;
+
+
+let html="";
+
+
+list.forEach(p=>{
+
+let wished=wishlist.includes(p.id);
+
+html+=`
+
+<div class="product">
+
+<img src="${image(p)}">
+
+<h3>${p.name}</h3>
+
+<div class="category-name">${p.cat}</div>
+
+<div class="price">
+
+₹${p.price}
+
+${p.price>100
+?'<span class="old-price">₹'+(p.price+30)+'</span>'
+:""}
+
+</div>
+
+<div class="stock">
+
+${p.stock>0
+?"✔ In Stock ("+p.stock+")"
+:"❌ Out of Stock"}
+
+</div>
+
+<div class="product-actions">
+
+<button class="btn"
+onclick="addToCart(${p.id})"
+${p.stock<=0?"disabled":""}>
+Add to Cart
+</button>
+
+<button class="wishlist"
+onclick="toggleWishlist(${p.id})">
+
+${wished?"❤️":"♡"}
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("productGrid").innerHTML=
+html || "<p>No products found.</p>";
+
+}
+
+
+function filterCategory(cat){
+
+selectedCategory=cat;
+
+renderProducts();
+
+scrollProducts();
+
+}
+
+
+function sortProducts(type){
+
+sortType=type;
+
+renderProducts();
+
+}
+
+
+function scrollProducts(){
+
+document.getElementById("productsSection")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+
+function addToCart(id){
+
+let product=products.find(p=>p.id===id);
+
+if(!product || product.stock<=0)
+return;
+
+
+let item=cart.find(x=>x.id===id);
+
+if(item){
+
+if(item.qty<product.stock)
+item.qty++;
+
+}else{
+
+cart.push({
+id:id,
+qty:1
+});
+
+}
+
+saveCart();
+
+}
+
+
+function saveCart(){
+
+localStorage.setItem(
+"freshkart_cart",
+JSON.stringify(cart)
+);
+
+renderCart();
+
+}
+
+
+function renderCart(){
+
+let html="";
+let subtotal=0;
+
+cart.forEach(item=>{
+
+let p=products.find(x=>x.id===item.id);
+
+if(!p)return;
+
+let total=p.price*item.qty;
+
+subtotal+=total;
+
+html+=`
+
+<div class="cart-item">
+
+<img src="${image(p)}">
+
+<div style="flex:1">
+
+<b>${p.name}</b>
+
+<p>₹${p.price}</p>
+
+<div class="qty">
+
+<button onclick="changeQty(${p.id},-1)">−</button>
+
+<span>${item.qty}</span>
+
+<button onclick="changeQty(${p.id},1)">+</button>
+
+<button
+onclick="removeFromCart(${p.id})"
+style="margin-left:10px;border:none;background:none;cursor:pointer">
+🗑️
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("cartItems").innerHTML=
+html || "<p>Your cart is empty.</p>";
+
+
+discountAmount=
+calculateDiscount(subtotal);
+
+
+let delivery=subtotal>=499||subtotal===0?0:40;
+
+let total=subtotal-discountAmount+delivery;
+
+document.getElementById("subtotal").innerText=subtotal;
+document.getElementById("discount").innerText=discountAmount;
+document.getElementById("delivery").innerText=delivery;
+document.getElementById("grandTotal").innerText=Math.max(0,total);
+
+document.getElementById("cartCount").innerText=
+cart.reduce((sum,x)=>sum+x.qty,0);
+
+}
+
+
+function changeQty(id,amount){
+
+let item=cart.find(x=>x.id===id);
+
+let p=products.find(x=>x.id===id);
+
+if(!item)return;
+
+item.qty+=amount;
+
+if(item.qty<=0){
+
+cart=cart.filter(x=>x.id!==id);
+
+}
+
+if(item.qty>p.stock){
+
+item.qty=p.stock;
+
+}
+
+saveCart();
+
+}
+
+
+function removeFromCart(id){
+
+cart=cart.filter(x=>x.id!==id);
+
+saveCart();
+
+}
+
+
+function openCart(){
+
+renderCart();
+
+document.getElementById("overlay")
+.classList.add("show");
+
+document.getElementById("cartPanel")
+.classList.add("open");
+
+}
+
+
+function closeCart(){
+
+document.getElementById("cartPanel")
+.classList.remove("open");
+
+}
+
+
+function applyCoupon(){
+
+let code=
+document.getElementById("couponInput")
+.value.trim()
+.toUpperCase();
+
+let subtotal=cart.reduce((sum,item)=>{
+
+let p=products.find(x=>x.id===item.id);
+
+return sum+(p?p.price*item.qty:0);
+
+},0);
+
+
+if(code==="FRESH10"){
+
+appliedCoupon=code;
+
+document.getElementById("couponMessage")
+.innerText="✅ 10% discount applied!";
+
+}
+
+else if(code==="SAVE50"){
+
+appliedCoupon=code;
+
+document.getElementById("couponMessage")
+.innerText="✅ ₹50 discount applied!";
+
+}
+
+else if(code==="WELCOME20"){
+
+appliedCoupon=code;
+
+document.getElementById("couponMessage")
+.innerText="✅ 20% discount applied!";
+
+}
+
+else{
+
+appliedCoupon="";
+
+document.getElementById("couponMessage")
+.innerText="❌ Invalid coupon.";
+
+}
+
+renderCart();
+
+}
+
+
+function calculateDiscount(subtotal){
+
+if(appliedCoupon==="FRESH10")
+return Math.round(subtotal*.10);
+
+if(appliedCoupon==="SAVE50")
+return Math.min(50,subtotal);
+
+if(appliedCoupon==="WELCOME20")
+return Math.round(subtotal*.20);
+
+return 0;
+
+}
+
+
+function openCheckout(){
+
+if(cart.length===0){
+
+alert("Your cart is empty!");
+
+return;
+
+}
+
+closeCart();
+
+document.getElementById("checkoutModal")
+.classList.add("show");
+
+document.getElementById("overlay")
+.classList.add("show");
+
+document.getElementById("checkoutName").value=
+profile.name||"";
+
+document.getElementById("checkoutPhone").value=
+profile.phone||"";
+
+document.getElementById("checkoutAddress").value=
+profile.address||"";
+
+let today=new Date();
+
+today.setDate(today.getDate()+1);
+
+document.getElementById("deliveryDate").min=
+today.toISOString().split("T")[0];
+
+document.getElementById("deliveryDate").value=
+today.toISOString().split("T")[0];
+
+}
+
+
+function makePayment(){
+
+let name=
+document.getElementById("checkoutName").value.trim();
+
+let phone=
+document.getElementById("checkoutPhone").value.trim();
+
+let address=
+document.getElementById("checkoutAddress").value.trim();
+
+let date=
+document.getElementById("deliveryDate").value;
+
+let slot=
+document.getElementById("deliverySlot").value;
+
+let payment=
+document.querySelector(
+'input[name="payment"]:checked'
+).value;
+
+
+if(!name||!phone||!address||!date){
+
+alert("Please fill all delivery details.");
+
+return;
+
+}
+
+
+let subtotal=cart.reduce((sum,item)=>{
+
+let p=products.find(x=>x.id===item.id);
+
+return sum+(p?p.price*item.qty:0);
+
+},0);
+
+
+let discount=calculateDiscount(subtotal);
+
+let delivery=subtotal>=499?0:40;
+
+let total=subtotal-discount+delivery;
+
+
+let order={
+
+id:"FK"+Date.now().toString().slice(-8),
+
+date:new Date().toLocaleString(),
+
+items:JSON.parse(JSON.stringify(cart)),
+
+subtotal:subtotal,
+
+discount:discount,
+
+delivery:delivery,
+
+total:total,
+
+name:name,
+
+phone:phone,
+
+address:address,
+
+deliveryDate:date,
+
+slot:slot,
+
+payment:payment,
+
+status:"Order Placed",
+
+trackingStep:0
+
+};
+
+
+orders.unshift(order);
+
+localStorage.setItem(
+"freshkart_orders",
+JSON.stringify(orders)
+);
+
+
+/* Reduce inventory */
+
+cart.forEach(item=>{
+
+let p=products.find(x=>x.id===item.id);
+
+if(p){
+
+p.stock=Math.max(
+0,
+p.stock-item.qty
+);
+
+}
+
+});
+
+
+cart=[];
+
+localStorage.setItem(
+"freshkart_cart",
+JSON.stringify(cart)
+);
+
+appliedCoupon="";
+
+
+document.getElementById("checkoutModal")
+.classList.remove("show");
+
+document.getElementById("successOrderId")
+.innerText=order.id;
+
+document.getElementById("successDelivery")
+.innerText=
+order.deliveryDate+" - "+order.slot;
+
+document.getElementById("successModal")
+.classList.add("show");
+
+renderProducts();
+
+renderCart();
+
+}
+
+
+function openProfile(){
+
+document.getElementById("profileName").value=
+profile.name||"";
+
+document.getElementById("profileEmail").value=
+profile.email||"";
+
+document.getElementById("profilePhone").value=
+profile.phone||"";
+
+document.getElementById("profileAddress").value=
+profile.address||"";
+
+renderAddresses();
+
+showModal("profileModal");
+
+}
+
+
+function saveProfile(){
+
+profile={
+
+name:document.getElementById("profileName").value,
+
+email:document.getElementById("profileEmail").value,
+
+phone:document.getElementById("profilePhone").value,
+
+address:document.getElementById("profileAddress").value
+
+};
+
+
+localStorage.setItem(
+"freshkart_profile",
+JSON.stringify(profile)
+);
+
+
+document.getElementById("profileMessage")
+.innerText="✅ Information saved successfully!";
+
+}
+
+
+function renderAddresses(){
+
+let html="";
+
+addresses.forEach((address,index)=>{
+
+html+=`
+
+<div style="
+padding:10px;
+margin:8px 0;
+background:#f5f5f5;
+border-radius:8px">
+
+${address}
+
+<button
+onclick="deleteAddress(${index})"
+style="float:right;border:none;background:none;cursor:pointer">
+🗑️
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("addressList").innerHTML=
+html||"<p>No saved addresses.</p>";
+
+}
+
+
+function addAddress(){
+
+let address=
+document.getElementById("newAddress")
+.value.trim();
+
+if(!address)return;
+
+addresses.push(address);
+
+localStorage.setItem(
+"freshkart_addresses",
+JSON.stringify(addresses)
+);
+
+document.getElementById("newAddress").value="";
+
+renderAddresses();
+
+}
+
+
+function deleteAddress(index){
+
+addresses.splice(index,1);
+
+localStorage.setItem(
+"freshkart_addresses",
+JSON.stringify(addresses)
+);
+
+renderAddresses();
+
+}
+
+
+function openOrders(){
+
+renderOrders();
+
+showModal("ordersModal");
+
+}
+
+
+function renderOrders(){
+
+if(orders.length===0){
+
+document.getElementById("ordersList").innerHTML=
+"<p>You have not placed any orders yet.</p>";
+
+return;
+
+}
+
+
+let html="";
+
+
+orders.forEach(order=>{
+
+let steps=[
+"Order Placed",
+"Order Confirmed",
+"Preparing",
+"Out for Delivery",
+"Delivered"
+];
+
+
+html+=`
+
+<div style="
+background:#f8f8f8;
+padding:15px;
+margin:12px 0;
+border-radius:10px">
+
+<h3>Order ${order.id}</h3>
+
+<p>Total: ₹${order.total}</p>
+
+<p>
+Delivery:
+${order.deliveryDate}
+<br>
+${order.slot}
+</p>
+
+<p>
+Payment: ${order.payment}
+</p>
+
+<div class="tracking">
+
+${steps.map((step,index)=>`
+
+<div class="track-step
+${index<=order.trackingStep?"active":""}">
+
+${index<=order.trackingStep?"●":"○"}
+
+${step}
+
+</div>
+
+`).join("")}
+
+</div>
+
+<button
+class="btn"
+onclick="advanceOrder('${order.id}')">
+
+Simulate Next Tracking Status
+
+</button>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("ordersList").innerHTML=html;
+
+}
+
+
+function advanceOrder(id){
+
+let order=orders.find(x=>x.id===id);
+
+if(!order)return;
+
+if(order.trackingStep<4)
+order.trackingStep++;
+
+order.status=[
+"Order Placed",
+"Order Confirmed",
+"Preparing",
+"Out for Delivery",
+"Delivered"
+][order.trackingStep];
+
+localStorage.setItem(
+"freshkart_orders",
+JSON.stringify(orders)
+);
+
+renderOrders();
+
+}
+
+
+function toggleWishlist(id){
+
+if(wishlist.includes(id)){
+
+wishlist=wishlist.filter(x=>x!==id);
+
+}else{
+
+wishlist.push(id);
+
+}
+
+localStorage.setItem(
+"freshkart_wishlist",
+JSON.stringify(wishlist)
+);
+
+renderProducts();
+
+}
+
+
+function renderRecommendations(){
+
+let usedCats=[];
+
+cart.forEach(item=>{
+
+let p=products.find(x=>x.id===item.id);
+
+if(p && !usedCats.includes(p.cat))
+usedCats.push(p.cat);
+
+});
+
+
+let recs=products
+.filter(p=>
+usedCats.length===0 ||
+usedCats.includes(p.cat)
+)
+.slice(0,6);
+
+
+document.getElementById("recommendations")
+.innerHTML=recs.map(p=>`
+
+<div class="rec">
+
+<img src="${image(p)}">
+
+<h4>${p.name}</h4>
+
+<p>₹${p.price}</p>
+
+<button
+class="btn"
+onclick="addToCart(${p.id})">
+
+Add
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+function openAbout(){
+
+showModal("aboutModal");
+
+}
+
+
+function showModal(id){
+
+closeAll(false);
+
+document.getElementById("overlay")
+.classList.add("show");
+
+document.getElementById(id)
+.classList.add("show");
+
+}
+
+
+function closeAll(hideOverlay=true){
+
+document.querySelectorAll(".modal")
+.forEach(x=>x.classList.remove("show"));
+
+document.getElementById("cartPanel")
+.classList.remove("open");
+
+if(hideOverlay){
+
+document.getElementById("overlay")
+.classList.remove("show");
+
+}
+
+}
+
+
+function openAdmin(){
+
+renderAdmin();
+
+showModal("adminModal");
+
+}
+
+
+function renderAdmin(){
+
+let search=
+(document.getElementById("adminSearch")?.value||"")
+.toLowerCase();
+
+
+let list=products.filter(p=>
+p.name.toLowerCase().includes(search)
+);
+
+
+document.getElementById("adminProducts").innerText=
+products.length;
+
+document.getElementById("adminStock").innerText=
+products.filter(p=>p.stock>0).length;
+
+document.getElementById("adminLow").innerText=
+products.filter(p=>p.stock<=5).length;
+
+document.getElementById("adminOrders").innerText=
+orders.length;
+
+
+document.getElementById("adminTable").innerHTML=
+list.map(p=>`
+
+<tr>
+
+<td>${p.name}</td>
+
+<td>
+<input
+type="number"
+value="${p.price}"
+onchange="updatePrice(${p.id},this.value)">
+</td>
+
+<td>
+<input
+type="number"
+value="${p.stock}"
+onchange="updateStock(${p.id},this.value)">
+</td>
+
+<td>
+
+<button
+class="btn"
+onclick="toggleStock(${p.id})">
+
+${p.stock>0?"Available":"Out of Stock"}
+
+</button>
+
+</td>
+
+<td>
+
+<span class="badge">
+
+${p.price>100?"Offer":"Regular"}
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+function updatePrice(id,value){
+
+let p=products.find(x=>x.id===id);
+
+p.price=Number(value);
+
+renderProducts();
+
+renderAdmin();
+
+}
+
+
+function updateStock(id,value){
+
+let p=products.find(x=>x.id===id);
+
+p.stock=Math.max(0,Number(value));
+
+renderProducts();
+
+renderAdmin();
+
+}
+
+
+function toggleStock(id){
+
+let p=products.find(x=>x.id===id);
+
+if(p.stock>0)
+p.stock=0;
+else
+p.stock=20;
+
+renderProducts();
+
+renderAdmin();
+
+}
+
+
+function addProduct(){
+
+let name=prompt("Enter product name:");
+
+if(!name)return;
+
+let price=Number(
+prompt("Enter price:")
+);
+
+let stock=Number(
+prompt("Enter stock:")
+);
+
+let cat=prompt(
+"Enter category:",
+"Fruits & Vegetables"
+);
+
+
+products.push({
+
+id:Date.now(),
+
+name:name,
+
+cat:cat,
+
+price:price,
+
+stock:stock,
+
+img:"grocery,food"
+
+});
+
+
+renderProducts();
+
+renderAdmin();
+
+}
+
+
+document.addEventListener(
+"change",
+function(e){
+
+if(e.target.name==="payment"){
+
+let type=e.target.value;
+
+document.getElementById("paymentFields").innerHTML=
+type==="UPI"
+?'<input placeholder="Enter demo UPI ID">'
+:type==="Card"
+?'<input placeholder="Demo card number"><input placeholder="Expiry MM/YY"><input placeholder="CVV">'
+:type==="Net Banking"
+?'<select><option>Select Bank</option><option>State Bank</option><option>HDFC Bank</option><option>ICICI Bank</option></select>'
+:"<p>Pay when your groceries are delivered.</p>";
+
+}
+
+});
+
+
+renderCategories();
+
+renderProducts();
+
+renderCart();
+
+renderRecommendations();
+
+</script>
+
+</body>
+</html>

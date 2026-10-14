@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecom Application using CSS</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: burlywood;
+            color: white;
+        }
+
+        .container{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-areas: "header header header header"
+                                "menu menu menu menu"
+                                "banner banner banner banner"
+                                "products products products products"
+                                "offer offer offer offer"
+                                "services services services services"
+                                "footer footer footer footer";
+        }
+
+        .header{
+             grid-area: header;
+             display: grid;
+             grid-template-columns: 20% 60% 20%;
+             align-items: center;
+             justify-content: center;
+        }
+        .logo{
+            align-items: center;
+        }
+
+        .logo img{
+            width: 150px;
+            height: 100px;
+        }
+
+        .search{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search input[type=text]{
+            width: 200px;
+            height: 20px;
+        }
+
+        nav{
+            grid-area: menu;
+            position: sticky;
+            top: 0;
+            padding: 20px;
+            background-color: brown;
+            z-index: 100;
+        }
+
+        nav ul{
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 150px;
+        }
+
+        nav ul li:hover{
+            color: bisque;
+            cursor: pointer; 
+        }
+
+        .banner {
+            grid-area: banner;
+            width: 100%;
+            padding: 10px;
+            background-color: orange;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            width: 100%;
+            animation: slide 12s infinite;
+        }
+
+        .slider img {
+            min-width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .products .section-title{
+            background-color: brown;
+            align-content: center;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 30px;
+            
+
+        }
+
+        .products{
+            grid-area: products;
+            width: 100%;
+        }
+
+        .product-container{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card{
+            border-radius: 10px;
+            background-color: olive;
+            text-align: center;
+            transition: 0.3s;
+            gap: 30px;
+        }
+
+        .product-card:hover{
+            transform: translateY(-5px);
+        }
+
+        .product-card button{
+            border-radius: 10px;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            transition :0.3s;
+        }
+        .product-card button:hover{
+            transform: translateY(-8px);
+            background-color: gold;
+        }
+
+        .offer{
+            grid-area: offer;
+            background-color: orange;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .offer pre{
+            font-size: 16px;
+        }
+
+        .services{
+            grid-area: services;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: grey;
+            padding: 20px;
+            gap: 200px;
+            margin: 5px;
+     }
+
+     footer{
+        grid-area: footer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        color: white;
+        padding: 30px;
+     }
+        @keyframes slide {
+
+            0% {
+                transform: translateX(0);
+            }
+
+            15% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-100%);
+            }
+
+            35% {
+                transform: translateX(-100%);
+            }
+
+            40% {
+                transform: translateX(-200%);
+            }
+
+            55% {
+                transform: translateX(-200%);
+            }
+
+            60% {
+                transform: translateX(-300%);
+            }
+
+            75% {
+                transform: translateX(-300%);
+            }
+
+            80% {
+                transform: translateX(-400%);
+            }
+
+            95% {
+                transform: translateX(-400%);
+            }
+
+            100% {
+                transform: translateX(-500%);
+            }
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="C:\Users\user\Desktop\s1\flipkart logo.png" alt="">
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search Products">
+                <button type="submit">SUBMIT</button>
+            </div>
+            <div class="account">
+                <b>Login</b>|<b>Register</b>|<b>Cart(0)</b>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>Fashion</li>
+                <li>Groceries</li>
+                <li>Electronics</li>
+                <li>Mobiles</li>
+                <li>Appliances</li>
+                <li>Beauty</li>
+                <li>Books</li>
+                <li>Sports</li>
+            </ul>
+        </nav>
+
+        <section class="banner">
+        <div class="slider">
+            <img src="C:\Users\user\Desktop\s1\banner.jpg" alt="Shopping Offer">
+            <img src="C:\Users\user\Desktop\s1\slider3.jpg" alt="Electronics Offer">
+            <img src="C:\Users\user\Desktop\s1\slider2.jpg" alt="Fasgion Offer">
+            <img src="C:\Users\user\Desktop\s1\slider1.jpg" alt="Fashion Offer">
+            <img src="C:\Users\user\Desktop\s1\PaisaWapas-App-1.webp" alt="Fashion Offer">
+            <img src="C:\Users\user\Desktop\s1\images.jpg" alt="Fashion Offer">
+        </div>
+        </section>
+
+        <section class="products">
+            <h2 class="section-title">FEATURED PRODUCTS</h2>
+            <div class="product-container">
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\images (1).jpg" alt="image1">
+                    <h4>Running shoes</h4>
+                    <h3>&#8377;1499</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\images (2).jpg" alt="headphones">
+                    <h4>Wireless Headphones</h4>
+                    <h3>&#8377;1999</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\phone.jpg" alt="smartphone">
+                    <h4>Smartphone</h4>
+                    <h3>&#298377;269000 </h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\images (10).jpg" alt="smartwatch">
+                    <h4>Smart Watch</h4>
+                    <h3>&#8377;2,499</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\laptop.jpg" alt="Laptop">
+                    <h4>Laptop </h4>
+                    <h3>&#82999;79999</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\shirt.jpg" alt="T-Shirt">
+                    <h4>T-Shirt</h4>
+                    <h3>&#8377;1,299</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\images (11).jpg" alt="keyboard">
+                    <h4> Keyboard</h4>
+                    <h3>&#8377;1099</h3>
+                    <button>Add to Cart</button>
+                </div>
+
+                <div class="product-card">
+                    <img src="C:\Users\user\Desktop\s1\images (12).jpg" alt="skincare">
+                    <h4>Skincare Set</h4>
+                    <h3>&#8377;1799</h3>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="offer">
+            <pre>
+                Grab the best deals today!
+                Enjoy exciting discounts on selected products.
+                Shop now and save more.
+                Limited-time offers available.
+                Hurry before the deals end!
+            </pre>
+        </section>
+
+        <section class="services">
+            <div><h3>Fast & Free delivery</h3></div>
+            <div><h3>Secure Payment</h3></div>
+            <div><h3>Easy returns</h3></div>
+            <div><h3>24/7 Customer support</h3></div>
+        </section>
+
+        <footer>
+            <pre>
+                @2026 Ecom Application | 
+                All rights Reserved
+            </pre>
+        </footer>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Block Layout</title>
+<style>
+.container {
+  border: 1px solid red;
+  display: grid;
+  grid-template-rows: 10% 40% 40% 10%;   
+  grid-template-columns: 25% 25% 25% 25%; 
+  width: 100vw;  
+  height: 100vh; 
+}
+
+.sec1 {
+  background-color: red;
+  grid-row: 1 / 2;
+  grid-column: 1 / 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: white;
+}
+
+
+
+.sec2 {
+  background-color: yellow;
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  text-align: center;
+  padding: 10px;
+}
+
+.sec2 img {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.sec3 {
+  background-color: blue;
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+.sec4 {
+  background-color: green;
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+}
+
+.sec5 {
+  background-color: pink;
+  grid-row: 2 / 4;
+  grid-column: 4 / 5; 
+}
+
+.sec6 {
+  background-color: red;
+  grid-row: 3 / 4;
+  grid-column: 1 / 4;
+}
+
+.sec7 {
+  background-color: lightblue;
+  grid-row: 4 / 5;
+  grid-column: 1 / 5;
+text-align: center;   
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="sec1">
+    <div class="search-bar">
+      <input type="text" placeholder="ENTER ITEMS"/>
+      <input type="button" value="Search"/>
+    </div>
+    <div class="user-links">
+      <p>Login | Register | Cart(0)</p>
+    </div>
+  </div>
+  <div class="sec2">
+    <img src="C:\Users\user\Desktop\s1\phone.jpg" alt="Phone"/>
+    <p><b>Smartphone</b>
+   ₹60,000
+<input type = "button" value ="Add to cart"/>
+</p>
+  </div>
+
+ <div class="sec3">
+    <img src="C:\Users\user\Desktop\s1\laptop.jpg" alt="Laptop" width="75%"/>
+    <p><b>Laptop</b></p>
+    <p>₹85,000</p>
+    <input type="button" value="Add to cart"/>
+  </div>
+  <div class="sec4"> 
+<img src="C:\Users\user\Desktop\s1\images (10).jpg" alt="Watch" width="50%" />
+    <p><b>Smartwatch</b>
+    ₹55,000
+<br><input type = "button" value ="Add to cart"/></p>
+</div>
+<div class="sec5">
+<p> LIST OF ITEMS IN OUR WEB SITE</p>
+  <p>Fashion  (clothes, shoes, accessories)</p>
+  <p>Groceries  (fruits, vegetables, packaged food)</p>
+  <p>Electronics  (laptops, cameras, gadgets)</p>
+  <p>Mobiles  (smartphones, accessories)</p>
+  <p>Appliances  (washing machines, refrigerators, kitchen appliances)</p>
+  <p>Beauty  (cosmetics, skincare, haircare)</p>
+  <p>Books  (novels, textbooks, e‑books)</p>
+  <p>Sports  (fitness gear, outdoor equipment)</p>
+</div>
+
+
+  <div class="sec6">
+<img src="C:\Users\user\Desktop\s1\banner.jpg" width="100%" height="100%"/></div>
+  <div class="sec7"> 
+ <td style="text-align: center;">
+      <h2>THANK YOU FOR VISITING</h2>
+      <p>Email: rohitkilli43@gmail.com</p>
+        <p>Phone: +91 98765 43210</p>
+        <p>© 2026 My Website. All Rights Reserved.</p>
+   
+
+</div>
+</body>
+</html>

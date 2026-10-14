@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Layout</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            border: 1px solid red;
+            display: grid;
+            grid-template-rows: 20vh 30vh 30vh 20vh;
+            grid-template-columns: 25% 25% 25% 25%;
+        }
+
+        .container > div {
+            padding: 20px;
+        }
+
+        .sec1 {
+            background-color: blue;
+            grid-row: 1 / 2;
+            grid-column: 1 / 5;
+            color: white;
+        }
+
+        .sec2 {
+            background-color: red;
+            grid-row: 2 / 3;
+            grid-column: 1 / 2;
+            color: white;
+        }
+
+        .sec3 {
+            background-color: green;
+            grid-row: 2 / 3;
+            grid-column: 2 / 3;
+            color: white;
+        }
+
+        .sec4 {
+            background-color: orange;
+            grid-row: 2 / 3;
+            grid-column: 3 / 4;
+            color: white;
+        }
+
+        .sec5 {
+            background-color: yellow;
+            grid-row: 2 / 4;
+            grid-column: 4 / 5;
+            color: black;
+        }
+
+        .sec6 {
+            background-color: violet;
+            grid-row: 3 / 4;
+            grid-column: 1 / 4;
+            color: white;
+        }
+
+        .sec7 {
+            background-color: grey;
+            grid-row: 4 / 5;
+            grid-column: 1 / 5;
+            color: white;
+        }
+
+        img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        h2 {
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Section 1 -->
+  <div class="sec1">
+    <div class="search-bar">
+      <input type="text" placeholder="ENTER ITEMS"/>
+      <input type="button" value="Search"/>
+    </div>
+
+<div class="user-links">
+      <p>Login | Register | Cart(0)</p>
+    </div>
+
+
+    <!-- Section 2 -->
+    <div class="sec2">
+        <h2>Technology</h2>
+        <p>Learn about HTML, CSS, JavaScript and programming.</p>
+        <img src="https://picsum.photos/300/150?random=2"
+             alt="Technology">
+        <button>Learn More</button>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="sec3">
+        <h2>Education</h2>
+        <p>Improve your skills with online learning resources.</p>
+        <img src="https://picsum.photos/300/150?random=3"
+             alt="Education">
+        <button>Explore</button>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="sec4">
+        <h2>Projects</h2>
+        <p>Build interesting projects and improve your coding skills.</p>
+        <img src="https://picsum.photos/300/150?random=4"
+             alt="Projects">
+        <button>View Projects</button>
+    </div>
+
+    <!-- Section 5 -->
+<div class="sec5">
+<p> LIST OF ITEMS IN OUR WEB SITE</p>
+  <p>Fashion  (clothes, shoes, accessories)</p>
+  <p>Groceries  (fruits, vegetables, packaged food)</p>
+  <p>Electronics  (laptops, cameras, gadgets)</p>
+  <p>Mobiles  (smartphones, accessories)</p>
+  <p>Appliances  (washing machines, refrigerators, kitchen appliances)</p>
+  <p>Beauty  (cosmetics, skincare, haircare)</p>
+  <p>Books  (novels, textbooks, e‑books)</p>
+  <p>Sports  (fitness gear, outdoor equipment)</p>
+</div>
+
+    <!-- Section 6 -->
+    <div class="sec6">
+        <h2>Featured Content</h2>
+        <p>
+            Discover useful tutorials, programming concepts,
+            project ideas and learning resources.
+        </p>
+
+        <img src="https://picsum.photos/600/150?random=6"
+             alt="Featured Content">
+    </div>
+
+    <!-- Section 7 -->
+    <div class="sec7">
+        <h2>Contact Us</h2>
+        <p>Email: rohitkilli43@gmail.com</p>
+        <p>Phone: +91 98765 43210</p>
+        <p>© 2026 My Website. All Rights Reserved.</p>
+    </div>
+
+</div>
+
+</body>
+</html>

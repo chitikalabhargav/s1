@@ -1,0 +1,204 @@
+<html lang="en">
+
+<head>
+    <title>Registration Form</title>
+
+</head>
+
+<body>
+
+    <h1>Registration Form</h1>
+
+    <form>
+
+        <FULL NAME>
+        <label for="name">Full Name:</label><br>
+
+        <input type="text"
+               id="name"
+               name="name"
+               placeholder="Enter your name"
+               required
+               minlength="3">
+
+        <br>
+
+        <small>
+            Instruction: Enter at least 3 characters.
+        </small>
+
+        <br><br>
+
+
+        <USERNAME>
+        <label for="username">Username:</label><br>
+
+        <input type="text"
+               id="username"
+               name="username"
+               placeholder="Enter username"
+               required
+               minlength="4"
+               maxlength="15">
+
+        <br>
+
+        <small>
+            Instruction: Username must contain 4–15 characters.
+        </small>
+
+        <br><br>
+
+
+        <EMAIL>
+        <label for="email">Email:</label><br>
+
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="example@gmail.com"
+               required>
+
+        <br>
+
+        <small>
+            Instruction: Enter a valid email address.
+        </small>
+
+        <br><br>
+
+
+        <PHONE>
+        <label for="phone">Phone Number:</label><br>
+
+        <input type="tel"
+               id="phone"
+               name="phone"
+               placeholder="Enter 10 digit number"
+               pattern="[0-9]{10}"
+               required>
+
+        <br>
+
+        <small>
+            Instruction: Enter exactly 10 digits.
+        </small>
+
+        <br><br>
+
+
+        <PASSWORD>
+        <label for="password">Password:</label><br>
+
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="Enter password"
+               minlength="8"
+               required>
+
+        <br>
+
+        <small>
+            Instruction: Password must contain at least 8 characters.
+        </small>
+
+        <br><br>
+
+
+        <CONFIRM PASSWORD>
+        <label for="confirmPassword">
+            Confirm Password:
+        </label><br>
+
+        <input type="password"
+               id="confirmPassword"
+               name="confirmPassword"
+               placeholder="Re-enter password"
+               required>
+
+        <br>
+
+        <small>
+            Instruction: Enter the same password again.
+        </small>
+
+        <br><br>
+
+
+        <DATE OF BIRTH>
+        <label for="dob">Date of Birth:</label><br>
+
+        <input type="date"
+               id="dob"
+               name="dob"
+               required>
+
+        <br>
+
+        <small>
+            Instruction: Select your date of birth.
+        </small>
+
+        <br><br>
+
+
+        <GENDER>
+        <label>Gender:</label><br>
+
+        <input type="radio"
+               id="male"
+               name="gender"
+               value="male"
+               required>
+
+        <label for="male">Male</label>
+
+        <input type="radio"
+               id="female"
+               name="gender"
+               value="female">
+
+        <label for="female">Female</label>
+
+        <br>
+
+        <small>
+            Instruction: Select one option.
+        </small>
+
+        <br><br>
+
+        <TERMS>
+        <input type="checkbox"
+               id="terms"
+               name="terms"
+               required>
+
+        <label for="terms">
+            I agree to the terms and conditions.
+        </label>
+
+        <br>
+
+        <small>
+            Instruction: You must accept the terms.
+        </small>
+
+        <br><br>
+
+
+        <BUTTONS>
+        <button type="submit">
+            Register
+        </button>
+
+        <button type="reset">
+            Reset
+        </button>
+
+    </form>
+
+</body>
+
+</html>

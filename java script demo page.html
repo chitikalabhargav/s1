@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>JavaScript Demo Page</title>
+</head>
+
+<body>
+
+<h2>Internal Scripting</h2>
+
+<label>A = </label>
+<input type="text" placeholder="enter a value" id="text1">
+
+<br><br>
+
+<label>B = </label>
+<input type="text" placeholder="enter a value" id="text2">
+
+<br><br>
+
+<button type="button" onclick="addition()">Addition</button>
+<button type="button" onclick="subtraction()">Subtraction</button>
+<button type="button" onclick="multiplication()">Multiplication</button>
+<button type="button" onclick="division()">Division</button>
+
+
+<p id="demo1"></p>
+
+<script>
+
+function addition() {
+    var a = parseFloat(document.getElementById('text1').value);
+    var b = parseFloat(document.getElementById('text2').value);
+
+    var c = a + b;
+
+    document.getElementById('demo1').innerHTML =
+        "Addition = " + c;
+}
+
+function subtraction() {
+    var a = parseFloat(document.getElementById('text1').value);
+    var b = parseFloat(document.getElementById('text2').value);
+
+    var c = a - b;
+
+    document.getElementById('demo1').innerHTML =
+        "Subtraction = " + c;
+}
+
+function multiplication() {
+    var a = parseFloat(document.getElementById('text1').value);
+    var b = parseFloat(document.getElementById('text2').value);
+
+    var c = a * b;
+
+    document.getElementById('demo1').innerHTML =
+        "Multiplication = " + c;
+}
+
+function division() {
+    var a = parseFloat(document.getElementById('text1').value);
+    var b = parseFloat(document.getElementById('text2').value);
+
+    var c = a / b;
+
+    document.getElementById('demo1').innerHTML =
+        "Division = " + c;
+}
+
+</script>
+
+</body>
+</html>

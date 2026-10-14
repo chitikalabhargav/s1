@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Student Attendance Management System</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .btn-status {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-present {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .btn-absent {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btns button {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .mark-p { background-color: var(--success); }
+        .mark-p:hover { background-color: #16a34a; }
+        .mark-a { background-color: var(--danger); }
+        .mark-a:hover { background-color: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Student Attendance System</h1>
+        <p>Manage daily attendance and view metrics instantly.</p>
+    </header>
+
+    <!-- Form to Add Student -->
+    <div class="form-section">
+        <input type="text" id="studentName" placeholder="Enter Student Full Name" required>
+        <button onclick="addStudent()">Add Student</button>
+    </div>
+
+    <!-- Attendance Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Roll No.</th>
+                <th>Student Name</th>
+                <th>Today's Status</th>
+                <th>Mark Attendance</th>
+                <th>Attendance %</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+            <!-- Dynamic content will be injected here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    
+    let students = [
+        { rollNo: 1, name: "Arjun Sharma", presentCount: 8, totalDays: 10, status: "Present" },
+        { rollNo: 2, name: "Priya Patel", presentCount: 10, totalDays: 10, status: "Present" },
+        { rollNo: 3, name: "Rohan Das", presentCount: 6, totalDays: 10, status: "Absent" }
+    ];
+
+    
+    function renderTable() {
+        const tableBody = document.getElementById("studentTableBody");
+        tableBody.innerHTML = "";
+
+        students.forEach((student, index) => {
+            const percentage = student.totalDays > 0 
+                ? ((student.presentCount / student.totalDays) * 100).toFixed(1) 
+                : "0.0";
+
+            const statusClass = student.status === "Present" ? "btn-present" : "btn-absent";
+
+            const row = `
+                <tr>
+                    <td>${student.rollNo}</td>
+                    <td><strong>${student.name}</strong></td>
+                    <td><span class="btn-status ${statusClass}">${student.status}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="mark-p" onclick="updateAttendance(${index}, true)">P</button>
+                            <button class="mark-a" onclick="updateAttendance(${index}, false)">A</button>
+                        </div>
+                    </td>
+                    <td><strong>${percentage}%</strong> (${student.presentCount}/${student.totalDays})</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    
+    function addStudent() {
+        const nameInput = document.getElementById("studentName");
+        const name = nameInput.value.trim();
+
+        if (name === "") {
+            alert("Please enter a valid student name.");
+            return;
+        }
+
+        const nextRollNo = students.length > 0 ? students[students.length - 1].rollNo + 1 : 1;
+        
+        students.push({
+            rollNo: nextRollNo,
+            name: name,
+            presentCount: 0,
+            totalDays: 0,
+            status: "Not Marked"
+        });
+
+        nameInput.value = ""; // Clear input
+        renderTable();
+    }
+
+    
+    function updateAttendance(index, isPresent) {
+        students[index].totalDays += 1;
+        if (isPresent) {
+            students[index].presentCount += 1;
+            students[index].status = "Present";
+        } else {
+            students[index].status = "Absent";
+        }
+        renderTable();
+    }
+
+    
+    window.onload = renderTable;
+</script>
+
+</body>
+</html>

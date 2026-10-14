@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Counter</title>
+
+    <style>
+        body {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .counter {
+            border: 1px solid black;
+            width: 300px;
+            margin: auto;
+            padding: 30px;
+        }
+
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 18px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <h1>Counter</h1>
+        <div id="count">0</div>
+        <button onclick="decrease()">-</button>
+
+        <button onclick="reset()">Reset</button>
+
+        <button onclick="increase()">+</button>
+
+    </div>
+
+    <script>
+        let count = 0;
+        function increase() {
+            count++;
+            document.getElementById("count").innerHTML = count;
+        }
+
+        function decrease() {
+            count--;
+            document.getElementById("count").innerHTML = count;
+        }
+
+        function reset() {
+            count = 0;
+            document.getElementById("count").innerHTML = count;
+        }
+
+    </script>
+
+</body>
+</html>

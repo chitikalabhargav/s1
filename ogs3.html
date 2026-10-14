@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>FreshCart - Online Grocery Store</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f7f7f7;
+    color: #222;
+}
+
+/* HEADER */
+header {
+    background: #ffffff;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px #ddd;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #0b8f3c;
+}
+
+.logo span {
+    color: #f5a400;
+}
+
+.location {
+    font-size: 14px;
+    color: #555;
+}
+
+.search {
+    flex: 1;
+    display: flex;
+}
+
+.search input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    font-size: 15px;
+}
+
+.search button {
+    border: none;
+    background: #0b8f3c;
+    color: white;
+    padding: 0 20px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+}
+
+.header-buttons button {
+    border: none;
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* NAVIGATION */
+
+nav {
+    background: white;
+    padding: 12px 5%;
+    border-top: 1px solid #eee;
+    overflow-x: auto;
+}
+
+nav button {
+    background: #f2f8f4;
+    border: none;
+    padding: 10px 18px;
+    margin-right: 8px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #0b8f3c;
+    color: white;
+}
+
+/* HERO */
+
+.hero {
+    margin: 25px 5%;
+    background: linear-gradient(120deg, #dff8e9, #fff6d9);
+    border-radius: 18px;
+    padding: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 40px;
+    color: #087a32;
+}
+
+.hero p {
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+.hero button {
+    padding: 13px 25px;
+    background: #0b8f3c;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* SECTION */
+
+section {
+    margin: 30px 5%;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 25px;
+}
+
+/* CATEGORY */
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+}
+
+.category {
+    background: white;
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 7px #ddd;
+}
+
+.category img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.category p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* PRODUCTS */
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+}
+
+.product {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 2px 8px #ddd;
+    transition: 0.2s;
+}
+
+.product:hover {
+    transform: translateY(-4px);
+}
+
+.product img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+}
+
+.discount {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e9f8ed;
+    color: #087a32;
+    padding: 5px 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.wishlist {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    border: none;
+    background: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.product h3 {
+    margin: 8px 0;
+}
+
+.rating {
+    color: #f5a400;
+    font-size: 14px;
+}
+
+.price {
+    margin: 8px 0;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 5px;
+}
+
+.new-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.product button {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #0b8f3c;
+    background: white;
+    color: #0b8f3c;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.product button:hover {
+    background: #0b8f3c;
+    color: white;
+}
+
+/* CART */
+
+.cart-panel {
+    position: fixed;
+    right: -420px;
+    top: 0;
+    width: 400px;
+    max-width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 2000;
+    box-shadow: -3px 0 15px #aaa;
+    padding: 25px;
+    transition: 0.3s;
+    overflow-y: auto;
+}
+
+.cart-panel.active {
+    right: 0;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex;
+    gap: 10px;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.quantity button {
+    padding: 4px 9px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.cart-total {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    border: none;
+    background: #0b8f3c;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.form-group small {
+    display: block;
+    color: #777;
+    margin-top: 4px;
+}
+
+.auth-error {
+    color: #d93025;
+    font-size: 13px;
+    margin-top: 5px;
+    min-height: 16px;
+}
+
+.submit-btn {
+    background: #0b8f3c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* TRACKING */
+
+.tracking {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.track-step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+}
+
+.track-step::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: -50%;
+    width: 100%;
+    height: 3px;
+    background: #ccc;
+}
+
+.track-step:last-child::after {
+    display: none;
+}
+
+.track-circle {
+    width: 32px;
+    height: 32px;
+    background: #0b8f3c;
+    color: white;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+    display: none;
+    padding: 30px 5%;
+}
+
+.dashboard.active {
+    display: block;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.dashboard-card h3 {
+    color: #777;
+}
+
+.dashboard-card p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0b8f3c;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+th,
+td {
+    padding: 13px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #eaf7ef;
+}
+
+/* FOOTER */
+
+footer {
+    background: #173b25;
+    color: white;
+    padding: 40px 5%;
+    margin-top: 50px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+}
+
+footer h3 {
+    margin-bottom: 15px;
+}
+
+footer p {
+    margin: 8px 0;
+    color: #ddd;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 700px) {
+
+    header {
+        flex-wrap: wrap;
+    }
+
+    .search {
+        order: 3;
+        width: 100%;
+    }
+
+    .hero {
+        padding: 25px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .tracking {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .track-step::after {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        Fresh<span>Cart</span>
+    </div>
+
+    <div class="location">
+        📍 Deliver to<br>
+        <b>Your Location</b>
+    </div>
+
+    <div class="search">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for groceries, vegetables, fruits..."
+            onkeyup="searchProducts()"
+        >
+        <button onclick="searchProducts()">🔍</button>
+    </div>
+
+    <div class="header-buttons">
+        <button onclick="openModal('loginModal')">👤 Login</button>
+        <button onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
+    </div>
+
+</header>
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <button onclick="showHome()">Home</button>
+    <button onclick="filterCategory('Fruits & Vegetables')">Fruits & Vegetables</button>
+    <button onclick="filterCategory('Dairy & Eggs')">Dairy & Eggs</button>
+    <button onclick="filterCategory('Rice & Grains')">Rice & Grains</button>
+    <button onclick="filterCategory('Snacks')">Snacks</button>
+    <button onclick="filterCategory('Beverages')">Beverages</button>
+    <button onclick="filterCategory('Bakery')">Bakery</button>
+    <button onclick="filterCategory('Personal Care')">Personal Care</button>
+    <button onclick="filterCategory('Household Items')">Household</button>
+    <button onclick="openModal('offersModal')">🔥 Offers</button>
+    <button onclick="openModal('ordersModal')">📦 My Orders</button>
+
+</nav>
+
+<!-- HOME -->
+
+<main id="home">
+
+<!-- HERO -->
+
+<div class="hero">
+
+    <div>
+        <h1>Fresh Groceries<br>Delivered Fast 🚚</h1>
+
+        <p>
+            Fresh vegetables, fruits, dairy, snacks and
+            household essentials at your doorstep.
+        </p>
+
+        <button onclick="document.getElementById('products').scrollIntoView()">
+            Shop Now
+        </button>
+    </div>
+
+    <div style="font-size:100px;">
+        🛒🥦🍎
+    </div>
+
+</div>
+
+<!-- CATEGORIES -->
+
+<section>
+
+<div class="section-title">
+    <h2>Shop by Category</h2>
+</div>
+
+<div class="categories">
+
+<div class="category" onclick="filterCategory('Fruits & Vegetables')">
+<img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=300&q=80">
+<p>Fruits & Vegetables</p>
+</div>
+
+<div class="category" onclick="filterCategory('Dairy & Eggs')">
+<img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=300&q=80">
+<p>Dairy & Eggs</p>
+</div>
+
+<div class="category" onclick="filterCategory('Rice & Grains')">
+<img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=300&q=80">
+<p>Rice & Grains</p>
+</div>
+
+<div class="category" onclick="filterCategory('Snacks')">
+<img src="https://images.unsplash.com/photo-1621939514649-280e2aa0c7e2?auto=format&fit=crop&w=300&q=80">
+<p>Snacks</p>
+</div>
+
+<div class="category" onclick="filterCategory('Beverages')">
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=300&q=80">
+<p>Beverages</p>
+</div>
+
+<div class="category" onclick="filterCategory('Bakery')">
+<img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80">
+<p>Bakery</p>
+</div>
+
+<div class="category" onclick="filterCategory('Personal Care')">
+<img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=300&q=80">
+<p>Personal Care</p>
+</div>
+
+<div class="category" onclick="filterCategory('Household Items')">
+<img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=300&q=80">
+<p>Household</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<section id="products">
+
+<div class="section-title">
+
+<h2>Popular Groceries</h2>
+
+<span id="resultText">
+Showing all products
+</span>
+
+</div>
+
+<div class="products" id="productContainer"></div>
+
+</section>
+
+<!-- ORDER TRACKING -->
+
+<section>
+
+<div class="section-title">
+<h2>Track Your Latest Order</h2>
+</div>
+
+<div class="tracking">
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Order Placed</p>
+</div>
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Confirmed</p>
+</div>
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Being Prepared</p>
+</div>
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Ready</p>
+</div>
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Out for Delivery</p>
+</div>
+
+<div class="track-step">
+<div class="track-circle">✓</div>
+<p>Delivered</p>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- CART -->
+
+<div class="cart-panel" id="cartPanel">
+
+<span class="close" onclick="closeCart()">×</span>
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<div class="cart-total">
+
+<p>Subtotal: ₹<span id="subtotal">0</span></p>
+
+<p>Discount: -₹<span id="discount">0</span></p>
+
+<p>Delivery: ₹<span id="delivery">30</span></p>
+
+<hr>
+
+<h3>
+Total: ₹<span id="total">0</span>
+</h3>
+
+</div>
+
+<button class="checkout-btn" onclick="openCheckout()">
+Proceed to Checkout
+</button>
+
+</div>
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal('loginModal')">×</span>
+
+<h2>Login</h2>
+
+<div class="form-group">
+
+<label>Email / Mobile Number</label>
+
+<input type="text" id="loginUser">
+
+<small>Enter your registered email or mobile number.</small>
+<div class="auth-error" id="loginUserError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input type="password" id="loginPassword" placeholder="Enter your password">
+
+<small>Enter your account password.</small>
+<div class="auth-error" id="loginPasswordError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Select Role</label>
+
+<select id="role">
+
+<option>Customer</option>
+<option>Employee</option>
+<option>Store Manager</option>
+
+</select>
+
+</div>
+
+<button class="submit-btn" onclick="login()">
+Login
+</button>
+
+<p style="margin-top:15px;">
+Don't have an account?
+<a href="#" onclick="closeModal('loginModal');openModal('registerModal');return false">
+Register
+</a>
+</p>
+
+</div>
+
+</div>
+
+<!-- REGISTER MODAL -->
+
+<div class="modal" id="registerModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal('registerModal')">×</span>
+
+<h2>Create Customer Account</h2>
+
+<div class="form-group">
+
+<label>Full Name</label>
+
+<input type="text" id="registerName" placeholder="Enter your full name">
+
+<small>Enter your complete name.</small>
+<div class="auth-error" id="registerNameError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input type="email" id="registerEmail" placeholder="example@gmail.com">
+
+<small>Enter a valid email address.</small>
+<div class="auth-error" id="registerEmailError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Mobile Number</label>
+
+<input type="tel" id="registerMobile" placeholder="10-digit mobile number">
+
+<small>Enter your 10-digit mobile number.</small>
+<div class="auth-error" id="registerMobileError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input type="password" id="registerPassword" placeholder="Create password">
+
+<small>Password should be at least 6 characters.</small>
+<div class="auth-error" id="registerPasswordError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Address</label>
+
+<textarea id="registerAddress" placeholder="Enter delivery address"></textarea>
+<div class="auth-error" id="registerAddressError"></div>
+
+<small>Enter your complete delivery address.</small>
+
+</div>
+
+<button class="submit-btn" onclick="registerUser()">
+Create Account
+</button>
+
+</div>
+
+</div>
+
+<!-- CHECKOUT -->
+
+<div class="modal" id="checkoutModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal('checkoutModal')">×</span>
+
+<h2>Checkout</h2>
+
+<h3>Customer Information</h3>
+
+<div class="form-group">
+
+<label>Full Name</label>
+<input type="text" value="Rohit">
+
+</div>
+
+<div class="form-group">
+
+<label>Mobile Number</label>
+<input type="tel" placeholder="Enter mobile number">
+
+</div>
+
+<h3>Delivery Address</h3>
+
+<div class="form-group">
+
+<textarea placeholder="Enter delivery address"></textarea>
+
+</div>
+
+<h3>Delivery Schedule</h3>
+
+<div class="form-group">
+
+<label>Select Date</label>
+
+<input type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>Select Time Slot</label>
+
+<select>
+
+<option>8 AM - 10 AM</option>
+<option>10 AM - 12 PM</option>
+<option>12 PM - 2 PM</option>
+<option>4 PM - 6 PM</option>
+<option>6 PM - 8 PM</option>
+
+</select>
+
+</div>
+
+<h3>Coupon</h3>
+
+<div class="form-group">
+
+<input type="text" id="coupon"
+placeholder="Enter coupon code">
+
+<button
+style="margin-top:8px;padding:8px;"
+onclick="applyCoupon()">
+
+Apply Coupon
+
+</button>
+
+</div>
+
+<h3>Payment Method</h3>
+
+<div class="form-group">
+
+<select id="paymentMethod">
+
+<option>UPI</option>
+<option>Debit Card</option>
+<option>Credit Card</option>
+<option>Net Banking</option>
+<option>Cash on Delivery</option>
+
+</select>
+
+</div>
+
+<button class="submit-btn" onclick="placeOrder()">
+Place Order
+</button>
+
+</div>
+
+</div>
+
+<!-- PAYMENT SUCCESS -->
+
+<div class="modal" id="successModal">
+
+<div class="modal-content" style="text-align:center;">
+
+<h1>🎉</h1>
+
+<h2>Order Confirmed!</h2>
+
+<p style="margin:15px;">
+Your grocery order has been successfully placed.
+</p>
+
+<p>
+Order ID: <b>#FC10245</b>
+</p>
+
+<p style="margin-top:20px;">
+Thank you for shopping with FreshCart ❤️
+</p>
+
+<button
+class="submit-btn"
+style="margin-top:20px;"
+onclick="closeModal('successModal')">
+
+Continue Shopping
+
+</button>
+
+</div>
+
+</div>
+
+<!-- OFFERS -->
+
+<div class="modal" id="offersModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal('offersModal')">×</span>
+
+<h2>🔥 Today's Offers</h2>
+
+<br>
+
+<p>🥦 Get 20% OFF on fresh vegetables</p>
+<br>
+<p>🍎 Get 15% OFF on fruits</p>
+<br>
+<p>🥛 Buy 2 Dairy Products and get 10% OFF</p>
+<br>
+<p>🛒 Use <b>FRESH50</b> and get ₹50 OFF</p>
+<br>
+<p>🚚 Free delivery above ₹499</p>
+
+</div>
+
+</div>
+
+<!-- MY ORDERS -->
+
+<div class="modal" id="ordersModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal('ordersModal')">×</span>
+
+<h2>📦 My Orders</h2>
+
+<table>
+
+<tr>
+<th>Order ID</th>
+<th>Date</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>#FC10245</td>
+<td>10-09-2026</td>
+<td>₹645</td>
+<td>Out for Delivery</td>
+</tr>
+
+<tr>
+<td>#FC10212</td>
+<td>05-09-2026</td>
+<td>₹850</td>
+<td>Delivered</td>
+</tr>
+
+<tr>
+<td>#FC10190</td>
+<td>01-09-2026</td>
+<td>₹425</td>
+<td>Delivered</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- EMPLOYEE DASHBOARD -->
+
+<div class="dashboard" id="employeeDashboard">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:15px;"><h1>Employee Dashboard</h1><button class="submit-btn" onclick="logoutUser()">Logout</button></div>
+
+<br>
+
+<div class="dashboard-cards">
+
+<div class="dashboard-card">
+<h3>Today's Orders</h3>
+<p>42</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Pending Orders</h3>
+<p>12</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Ready for Delivery</h3>
+<p>8</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Low Stock Items</h3>
+<p>6</p>
+</div>
+
+</div>
+
+<h2 style="margin-top:35px;">
+Order Management
+</h2>
+
+<table>
+
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>#FC10245</td>
+<td>Rohit</td>
+<td>₹645</td>
+<td>Received</td>
+<td>
+<select onchange="alert('Order status updated!')">
+<option>Received</option>
+<option>Confirmed</option>
+<option>Being Prepared</option>
+<option>Ready for Delivery</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>#FC10246</td>
+<td>Sameera</td>
+<td>₹820</td>
+<td>Being Prepared</td>
+<td>
+<select>
+<option>Being Prepared</option>
+<option>Ready for Delivery</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- MANAGER DASHBOARD -->
+
+<div class="dashboard" id="managerDashboard">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:15px;"><h1>Store Manager Dashboard</h1><button class="submit-btn" onclick="logoutUser()">Logout</button></div>
+
+<br>
+
+<div class="dashboard-cards">
+
+<div class="dashboard-card">
+<h3>Total Sales</h3>
+<p>₹1,25,450</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Total Orders</h3>
+<p>286</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Customers</h3>
+<p>1,245</p>
+</div>
+
+<div class="dashboard-card">
+<h3>Low Stock</h3>
+<p>18</p>
+</div>
+
+</div>
+
+<br>
+
+<h2>Product Management</h2>
+
+<table>
+
+<tr>
+<th>Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>Fresh Apples</td>
+<td>Fruits & Vegetables</td>
+<td>₹120</td>
+<td>50</td>
+<td>
+<button onclick="alert('Product edited')">Edit</button>
+<button onclick="alert('Product deleted')">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>Milk</td>
+<td>Dairy & Eggs</td>
+<td>₹60</td>
+<td>12</td>
+<td>
+<button onclick="alert('Product edited')">Edit</button>
+<button onclick="alert('Product deleted')">Delete</button>
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<h2>Sales Reports</h2>
+
+<table>
+
+<tr>
+<th>Period</th>
+<th>Sales</th>
+<th>Orders</th>
+</tr>
+
+<tr>
+<td>Today</td>
+<td>₹12,450</td>
+<td>42</td>
+</tr>
+
+<tr>
+<td>This Week</td>
+<td>₹68,900</td>
+<td>156</td>
+</tr>
+
+<tr>
+<td>This Month</td>
+<td>₹1,25,450</td>
+<td>286</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h3>FreshCart</h3>
+
+<p>
+Your trusted online grocery store.
+Fresh groceries delivered to your doorstep.
+</p>
+
+</div>
+
+<div>
+
+<h3>Customer Service</h3>
+
+<p>📞 1800-123-4567</p>
+<p>📧 support@freshcart.com</p>
+<p>Live Chat</p>
+
+</div>
+
+<div>
+
+<h3>Quick Links</h3>
+
+<p>About Us</p>
+<p>My Orders</p>
+<p>Wishlist</p>
+<p>Offers</p>
+
+</div>
+
+<div>
+
+<h3>Store Management</h3>
+
+<p>Employee Login</p>
+<p>Manager Login</p>
+<p>Inventory</p>
+<p>Reports</p>
+
+</div>
+
+</div>
+
+<br>
+
+<center>
+<p>© 2026 FreshCart Online Grocery Store</p>
+</center>
+
+</footer>
+
+<script>
+
+/* PRODUCT DATA */
+
+const products = [
+
+{
+name:"Fresh Apples",
+category:"Fruits & Vegetables",
+price:120,
+oldPrice:150,
+discount:"20% OFF",
+rating:"⭐ 4.5",
+image:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Fresh Bananas",
+category:"Fruits & Vegetables",
+price:50,
+oldPrice:65,
+discount:"23% OFF",
+rating:"⭐ 4.4",
+image:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Tomatoes",
+category:"Fruits & Vegetables",
+price:40,
+oldPrice:50,
+discount:"20% OFF",
+rating:"⭐ 4.3",
+image:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Potatoes",
+category:"Fruits & Vegetables",
+price:35,
+oldPrice:45,
+discount:"22% OFF",
+rating:"⭐ 4.2",
+image:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Fresh Milk",
+category:"Dairy & Eggs",
+price:60,
+oldPrice:70,
+discount:"14% OFF",
+rating:"⭐ 4.6",
+image:"https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Fresh Eggs",
+category:"Dairy & Eggs",
+price:90,
+oldPrice:110,
+discount:"18% OFF",
+rating:"⭐ 4.5",
+image:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Basmati Rice",
+category:"Rice & Grains",
+price:180,
+oldPrice:220,
+discount:"18% OFF",
+rating:"⭐ 4.7",
+image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Wheat Flour",
+category:"Rice & Grains",
+price:70,
+oldPrice:85,
+discount:"17% OFF",
+rating:"⭐ 4.4",
+image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Potato Chips",
+category:"Snacks",
+price:30,
+oldPrice:40,
+discount:"25% OFF",
+rating:"⭐ 4.3",
+image:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Biscuits",
+category:"Snacks",
+price:25,
+oldPrice:30,
+discount:"17% OFF",
+rating:"⭐ 4.2",
+image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Orange Juice",
+category:"Beverages",
+price:90,
+oldPrice:110,
+discount:"18% OFF",
+rating:"⭐ 4.5",
+image:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Mineral Water",
+category:"Beverages",
+price:25,
+oldPrice:30,
+discount:"17% OFF",
+rating:"⭐ 4.4",
+image:"https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Bread",
+category:"Bakery",
+price:45,
+oldPrice:55,
+discount:"18% OFF",
+rating:"⭐ 4.6",
+image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Chocolate Cake",
+category:"Bakery",
+price:350,
+oldPrice:400,
+discount:"13% OFF",
+rating:"⭐ 4.8",
+image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Shampoo",
+category:"Personal Care",
+price:220,
+oldPrice:260,
+discount:"15% OFF",
+rating:"⭐ 4.5",
+image:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Toothpaste",
+category:"Personal Care",
+price:100,
+oldPrice:125,
+discount:"20% OFF",
+rating:"⭐ 4.4",
+image:"https://images.unsplash.com/photo-1559591937-e7b5f9a5e4c1?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Dishwash Liquid",
+category:"Household Items",
+price:120,
+oldPrice:150,
+discount:"20% OFF",
+rating:"⭐ 4.3",
+image:"https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+name:"Laundry Detergent",
+category:"Household Items",
+price:250,
+oldPrice:300,
+discount:"17% OFF",
+rating:"⭐ 4.5",
+image:"https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=500&q=80"
+}
+
+];
+
+/* CART */
+
+let cart = [];
+
+/* DISPLAY PRODUCTS */
+
+function displayProducts(list = products) {
+
+const container = document.getElementById("productContainer");
+
+container.innerHTML = "";
+
+list.forEach((product,index)=>{
+
+container.innerHTML += `
+
+<div class="product">
+
+<span class="discount">
+${product.discount}
+</span>
+
+<button class="wishlist"
+onclick="addWishlist('${product.name}')">
+♡
+</button>
+
+<img src="${product.image}"
+alt="${product.name}">
+
+<h3>${product.name}</h3>
+
+<p>${product.category}</p>
+
+<div class="rating">
+${product.rating}
+</div>
+
+<div class="price">
+
+<span class="old-price">
+₹${product.oldPrice}
+</span>
+
+<span class="new-price">
+₹${product.price}
+</span>
+
+</div>
+
+<button onclick="addToCart(${index})">
+Add to Cart
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* ADD CART */
+
+function addToCart(index) {
+
+let product = products[index];
+
+let existing = cart.find(item => item.name === product.name);
+
+if(existing) {
+
+existing.quantity++;
+
+} else {
+
+cart.push({
+...product,
+quantity:1
+});
+
+}
+
+updateCart();
+
+alert(product.name + " added to cart!");
+
+}
+
+/* UPDATE CART */
+
+function updateCart() {
+
+let container = document.getElementById("cartItems");
+
+container.innerHTML = "";
+
+let subtotal = 0;
+let count = 0;
+
+cart.forEach((item,index)=>{
+
+subtotal += item.price * item.quantity;
+count += item.quantity;
+
+container.innerHTML += `
+
+<div class="cart-item">
+
+<img src="${item.image}">
+
+<div style="flex:1">
+
+<b>${item.name}</b>
+
+<p>₹${item.price}</p>
+
+<div class="quantity">
+
+<button onclick="changeQuantity(${index},-1)">
+−
+</button>
+
+${item.quantity}
+
+<button onclick="changeQuantity(${index},1)">
++
+</button>
+
+<button
+onclick="removeCart(${index})"
+style="margin-left:10px;color:red;">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+let discount = subtotal >= 500 ? 50 : 0;
+
+let delivery = subtotal === 0 ? 0 : (subtotal >= 499 ? 0 : 30);
+
+let total = subtotal - discount + delivery;
+
+document.getElementById("subtotal").innerText = subtotal;
+
+document.getElementById("discount").innerText = discount;
+
+document.getElementById("delivery").innerText = delivery;
+
+document.getElementById("total").innerText = total;
+
+document.getElementById("cartCount").innerText = count;
+
+}
+
+/* QUANTITY */
+
+function changeQuantity(index,change) {
+
+cart[index].quantity += change;
+
+if(cart[index].quantity <= 0) {
+
+cart.splice(index,1);
+
+}
+
+updateCart();
+
+}
+
+/* REMOVE */
+
+function removeCart(index) {
+
+cart.splice(index,1);
+
+updateCart();
+
+}
+
+/* OPEN CART */
+
+function openCart() {
+
+document.getElementById("cartPanel")
+.classList.add("active");
+
+}
+
+/* CLOSE CART */
+
+function closeCart() {
+
+document.getElementById("cartPanel")
+.classList.remove("active");
+
+}
+
+/* SEARCH */
+
+function searchProducts() {
+
+let value =
+document.getElementById("searchInput")
+.value
+.toLowerCase();
+
+let result =
+products.filter(product =>
+product.name.toLowerCase().includes(value) ||
+product.category.toLowerCase().includes(value)
+);
+
+displayProducts(result);
+
+document.getElementById("resultText").innerText =
+result.length + " products found";
+
+}
+
+/* CATEGORY */
+
+function filterCategory(category) {
+
+let result =
+products.filter(product =>
+product.category === category
+);
+
+displayProducts(result);
+
+document.getElementById("resultText").innerText =
+category;
+
+document.getElementById("products")
+.scrollIntoView();
+
+}
+
+/* WISHLIST */
+
+function addWishlist(name) {
+
+alert(name + " added to wishlist ❤️");
+
+}
+
+/* MODAL */
+
+function openModal(id) {
+
+document.getElementById(id).style.display = "flex";
+
+}
+
+function closeModal(id) {
+
+document.getElementById(id).style.display = "none";
+
+}
+
+/* =========================
+   LOCAL STORAGE AUTHENTICATION
+========================= */
+
+function getUsers() {
+    return JSON.parse(localStorage.getItem("freshcartUsers")) || [];
+}
+
+function saveUsers(users) {
+    localStorage.setItem("freshcartUsers", JSON.stringify(users));
+}
+
+/* Demo staff accounts for the college project */
+function initializeDefaultUsers() {
+    let users = getUsers();
+
+    const defaultUsers = [
+        {
+            name: "FreshCart Employee",
+            email: "employee@freshcart.com",
+            mobile: "9000000001",
+            password: "employee123",
+            role: "Employee",
+            address: "FreshCart Store"
+        },
+        {
+            name: "FreshCart Manager",
+            email: "manager@freshcart.com",
+            mobile: "9000000002",
+            password: "manager123",
+            role: "Store Manager",
+            address: "FreshCart Store"
+        }
+    ];
+
+    defaultUsers.forEach(defaultUser => {
+        const exists = users.some(
+            user => user.email.toLowerCase() === defaultUser.email.toLowerCase()
+        );
+        if (!exists) users.push(defaultUser);
+    });
+
+    saveUsers(users);
+}
+
+function clearAuthErrors() {
+    [
+        "loginUserError", "loginPasswordError",
+        "registerNameError", "registerEmailError",
+        "registerMobileError", "registerPasswordError",
+        "registerAddressError"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = "";
+    });
+}
+
+/* REGISTER */
+function registerUser() {
+    clearAuthErrors();
+
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const mobile = document.getElementById("registerMobile").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const address = document.getElementById("registerAddress").value.trim();
+
+    let valid = true;
+
+    if (name.length < 3) {
+        document.getElementById("registerNameError").innerText =
+            "Full name must contain at least 3 characters.";
+        valid = false;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById("registerEmailError").innerText =
+            "Please enter a valid email address.";
+        valid = false;
+    }
+
+    if (!/^\d{10}$/.test(mobile)) {
+        document.getElementById("registerMobileError").innerText =
+            "Mobile number must contain exactly 10 digits.";
+        valid = false;
+    }
+
+    if (password.length < 6) {
+        document.getElementById("registerPasswordError").innerText =
+            "Password must contain at least 6 characters.";
+        valid = false;
+    }
+
+    if (address === "") {
+        document.getElementById("registerAddressError").innerText =
+            "Please enter your delivery address.";
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    const users = getUsers();
+
+    if (users.some(user => user.email.toLowerCase() === email.toLowerCase())) {
+        document.getElementById("registerEmailError").innerText =
+            "This email is already registered.";
+        return;
+    }
+
+    if (users.some(user => user.mobile === mobile)) {
+        document.getElementById("registerMobileError").innerText =
+            "This mobile number is already registered.";
+        return;
+    }
+
+    const newUser = {
+        name: name,
+        email: email,
+        mobile: mobile,
+        password: password,
+        role: "Customer",
+        address: address
+    };
+
+    users.push(newUser);
+    saveUsers(users);
+
+    alert("Account created successfully! You can now login.");
+
+    document.getElementById("registerName").value = "";
+    document.getElementById("registerEmail").value = "";
+    document.getElementById("registerMobile").value = "";
+    document.getElementById("registerPassword").value = "";
+    document.getElementById("registerAddress").value = "";
+
+    closeModal("registerModal");
+    openModal("loginModal");
+}
+
+/* LOGIN */
+function login() {
+    clearAuthErrors();
+
+    const loginUser = document.getElementById("loginUser").value.trim();
+    const loginPassword = document.getElementById("loginPassword").value;
+    const role = document.getElementById("role").value;
+
+    if (loginUser === "") {
+        document.getElementById("loginUserError").innerText =
+            "Please enter your email or mobile number.";
+        return;
+    }
+
+    if (loginPassword === "") {
+        document.getElementById("loginPasswordError").innerText =
+            "Please enter your password.";
+        return;
+    }
+
+    const users = getUsers();
+
+    const user = users.find(u =>
+        (u.email.toLowerCase() === loginUser.toLowerCase() || u.mobile === loginUser) &&
+        u.password === loginPassword &&
+        u.role === role
+    );
+
+    if (!user) {
+        document.getElementById("loginPasswordError").innerText =
+            "Invalid email/mobile, password, or selected role.";
+        return;
+    }
+
+    localStorage.setItem("freshcartCurrentUser", JSON.stringify(user));
+
+    closeModal("loginModal");
+
+    if (role === "Employee") {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("employeeDashboard").classList.add("active");
+        document.getElementById("managerDashboard").classList.remove("active");
+        document.getElementById("employeeDashboard").scrollIntoView();
+        alert("Welcome Employee!");
+    }
+    else if (role === "Store Manager") {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("employeeDashboard").classList.remove("active");
+        document.getElementById("managerDashboard").classList.add("active");
+        document.getElementById("managerDashboard").scrollIntoView();
+        alert("Welcome Store Manager!");
+    }
+    else {
+        document.getElementById("home").style.display = "block";
+        document.getElementById("employeeDashboard").classList.remove("active");
+        document.getElementById("managerDashboard").classList.remove("active");
+        window.scrollTo(0, 0);
+        alert("Welcome " + user.name + "!");
+    }
+}
+
+/* LOGOUT */
+function logoutUser() {
+    localStorage.removeItem("freshcartCurrentUser");
+    document.getElementById("employeeDashboard").classList.remove("active");
+    document.getElementById("managerDashboard").classList.remove("active");
+    document.getElementById("home").style.display = "block";
+    window.scrollTo(0, 0);
+    alert("You have been logged out.");
+}
+
+/* RESTORE LOGIN AFTER PAGE REFRESH */
+function restoreLogin() {
+    initializeDefaultUsers();
+
+    const currentUser = JSON.parse(
+        localStorage.getItem("freshcartCurrentUser")
+    );
+
+    if (!currentUser) return;
+
+    if (currentUser.role === "Employee") {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("employeeDashboard").classList.add("active");
+    }
+    else if (currentUser.role === "Store Manager") {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("managerDashboard").classList.add("active");
+    }
+}
+
+/* HOME */
+
+function showHome() {
+
+document.getElementById("home").style.display = "block";
+
+document.getElementById("employeeDashboard")
+.classList.remove("active");
+
+document.getElementById("managerDashboard")
+.classList.remove("active");
+
+window.scrollTo(0,0);
+
+displayProducts();
+
+}
+
+/* CHECKOUT */
+
+function openCheckout() {
+
+if(cart.length === 0) {
+
+alert("Your cart is empty!");
+
+return;
+
+}
+
+closeCart();
+
+openModal("checkoutModal");
+
+}
+
+/* COUPON */
+
+function applyCoupon() {
+
+let code =
+document.getElementById("coupon").value
+.toUpperCase();
+
+if(code === "FRESH50") {
+
+alert("Coupon applied! ₹50 discount added.");
+
+}
+
+else {
+
+alert("Invalid coupon code.");
+
+}
+
+}
+
+/* PLACE ORDER */
+
+function placeOrder() {
+
+let payment =
+document.getElementById("paymentMethod").value;
+
+closeModal("checkoutModal");
+
+openModal("successModal");
+
+cart = [];
+
+updateCart();
+}
+
+/* INITIAL DISPLAY */
+
+restoreLogin();
+displayProducts();
+
+updateCart();
+
+</script>
+
+</body>
+</html>

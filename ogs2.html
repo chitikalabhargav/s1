@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FreshCart - Login & Registration</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #dff8e9, #fff6d9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 95%;
+            min-height: 550px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* LEFT SIDE */
+
+        .left {
+            width: 45%;
+            background: #0b8f3c;
+            color: white;
+            padding: 50px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .logo span {
+            color: #ffd34d;
+        }
+
+        .left h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .left p {
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .features {
+            margin-top: 30px;
+        }
+
+        .features p {
+            margin: 12px 0;
+        }
+
+        /* RIGHT SIDE */
+
+        .right {
+            width: 55%;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .right h2 {
+            color: #087a32;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0b8f3c;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #777;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 13px;
+            background: #0b8f3c;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .btn:hover {
+            background: #087a32;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .switch a {
+            color: #0b8f3c;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* REGISTER */
+
+        #registerForm {
+            display: none;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px;
+            background: #f7f7f7;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .dashboard-header h1 {
+            color: #0b8f3c;
+        }
+
+        .logout {
+            padding: 10px 18px;
+            border: none;
+            background: #d9534f;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .card h3 {
+            color: #777;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0b8f3c;
+            margin-top: 10px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 700px) {
+
+            .container {
+                flex-direction: column;
+            }
+
+            .left,
+            .right {
+                width: 100%;
+            }
+
+            .left {
+                padding: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN / REGISTER CONTAINER
+====================================================== -->
+
+<div class="container" id="authContainer">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left">
+
+        <div class="logo">
+            Fresh<span>Cart</span>
+        </div>
+
+        <h1>Fresh Groceries Delivered Fast 🚚</h1>
+
+        <p>
+            Fresh vegetables, fruits, dairy, snacks and
+            household essentials delivered to your doorstep.
+        </p>
+
+        <div class="features">
+
+            <p>🥦 Fresh Products</p>
+
+            <p>🚚 Fast Delivery</p>
+
+            <p>💳 Multiple Payment Options</p>
+
+            <p>🎁 Exciting Offers</p>
+
+            <p>📦 Easy Order Tracking</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <div id="loginForm">
+
+            <h2>Login to FreshCart</h2>
+
+            <div class="form-group">
+
+                <label>
+                    Email / Mobile Number
+                </label>
+
+                <input
+                    type="text"
+                    id="loginUser"
+                    placeholder="Enter email or mobile number"
+                >
+
+                <small>
+                    Enter your registered email or mobile number.
+                </small>
+
+                <div id="loginUserError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter password"
+                >
+
+                <small>
+                    Enter your account password.
+                </small>
+
+                <div id="loginPasswordError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Select Role
+                </label>
+
+                <select id="role">
+
+                    <option value="Customer">
+                        Customer
+                    </option>
+
+                    <option value="Employee">
+                        Employee
+                    </option>
+
+                    <option value="Store Manager">
+                        Store Manager
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="btn"
+                onclick="login()">
+
+                Login
+
+            </button>
+
+
+            <div class="switch">
+
+                Don't have an account?
+
+                <a onclick="showRegister()">
+                    Register
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REGISTER FORM
+        ================================================== -->
+
+        <div id="registerForm">
+
+            <h2>Create Customer Account</h2>
+
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Enter your full name"
+                >
+
+                <small>
+                    Enter your complete name.
+                </small>
+
+                <div id="nameError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="example@gmail.com"
+                >
+
+                <small>
+                    Enter a valid email address.
+                </small>
+
+                <div id="emailError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="registerMobile"
+                    placeholder="10-digit mobile number"
+                >
+
+                <small>
+                    Enter your 10-digit mobile number.
+                </small>
+
+                <div id="mobileError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Create password"
+                >
+
+                <small>
+                    Password should be at least 6 characters.
+                </small>
+
+                <div id="passwordError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Address
+                </label>
+
+                <textarea
+                    id="registerAddress"
+                    rows="3"
+                    placeholder="Enter delivery address">
+                </textarea>
+
+                <small>
+                    Enter your complete delivery address.
+                </small>
+
+                <div id="addressError"
+                     class="error">
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn"
+                onclick="registerUser()">
+
+                Create Account
+
+            </button>
+
+
+            <div class="switch">
+
+                Already have an account?
+
+                <a onclick="showLogin()">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CUSTOMER DASHBOARD
+====================================================== -->
+
+<div
+    class="dashboard"
+    id="customerDashboard">
+
+    <div class="dashboard-header">
+
+        <h1>
+            Customer Dashboard
+        </h1>
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Welcome
+            </h3>
+
+            <p id="customerName">
+                Customer
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Orders
+            </h3>
+
+            <p>
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Wishlist
+            </h3>
+
+            <p>
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Cart
+            </h3>
+
+            <p>
+                0
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     EMPLOYEE DASHBOARD
+====================================================== -->
+
+<div
+    class="dashboard"
+    id="employeeDashboard">
+
+    <div class="dashboard-header">
+
+        <h1>
+            Employee Dashboard
+        </h1>
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Today's Orders
+            </h3>
+
+            <p>
+                42
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Pending Orders
+            </h3>
+
+            <p>
+                12
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Ready for Delivery
+            </h3>
+
+            <p>
+                8
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Low Stock
+            </h3>
+
+            <p>
+                6
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MANAGER DASHBOARD
+====================================================== -->
+
+<div
+    class="dashboard"
+    id="managerDashboard">
+
+    <div class="dashboard-header">
+
+        <h1>
+            Store Manager Dashboard
+        </h1>
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Total Sales
+            </h3>
+
+            <p>
+                ₹1,25,450
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Total Orders
+            </h3>
+
+            <p>
+                286
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Customers
+            </h3>
+
+            <p>
+                1,245
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Low Stock
+            </h3>
+
+            <p>
+                18
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GET USERS FROM LOCAL STORAGE
+====================================================== */
+
+function getUsers() {
+
+    return JSON.parse(
+        localStorage.getItem("freshcartUsers")
+    ) || [];
+
+}
+
+
+/* =====================================================
+   SHOW REGISTER
+====================================================== */
+
+function showRegister() {
+
+    document.getElementById("loginForm")
+        .style.display = "none";
+
+    document.getElementById("registerForm")
+        .style.display = "block";
+
+}
+
+
+/* =====================================================
+   SHOW LOGIN
+====================================================== */
+
+function showLogin() {
+
+    document.getElementById("registerForm")
+        .style.display = "none";
+
+    document.getElementById("loginForm")
+        .style.display = "block";
+
+}
+
+
+/* =====================================================
+   REGISTER USER
+====================================================== */
+
+function registerUser() {
+
+    // Clear errors
+
+    document.getElementById("nameError")
+        .innerText = "";
+
+    document.getElementById("emailError")
+        .innerText = "";
+
+    document.getElementById("mobileError")
+        .innerText = "";
+
+    document.getElementById("passwordError")
+        .innerText = "";
+
+    document.getElementById("addressError")
+        .innerText = "";
+
+
+    // Get values
+
+    let name =
+        document.getElementById("registerName")
+        .value.trim();
+
+    let email =
+        document.getElementById("registerEmail")
+        .value.trim();
+
+    let mobile =
+        document.getElementById("registerMobile")
+        .value.trim();
+
+    let password =
+        document.getElementById("registerPassword")
+        .value;
+
+    let address =
+        document.getElementById("registerAddress")
+        .value.trim();
+
+
+    let valid = true;
+
+
+    /* NAME */
+
+    if (name.length < 3) {
+
+        document.getElementById("nameError")
+            .innerText =
+            "Full name must contain at least 3 characters.";
+
+        valid = false;
+
+    }
+
+
+    /* EMAIL */
+
+    let emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+
+        document.getElementById("emailError")
+            .innerText =
+            "Please enter a valid email.";
+
+        valid = false;
+
+    }
+
+
+    /* MOBILE */
+
+    if (!/^\d{10}$/.test(mobile)) {
+
+        document.getElementById("mobileError")
+            .innerText =
+            "Mobile number must contain exactly 10 digits.";
+
+        valid = false;
+
+    }
+
+
+    /* PASSWORD */
+
+    if (password.length < 6) {
+
+        document.getElementById("passwordError")
+            .innerText =
+            "Password must contain at least 6 characters.";
+
+        valid = false;
+
+    }
+
+
+    /* ADDRESS */
+
+    if (address === "") {
+
+        document.getElementById("addressError")
+            .innerText =
+            "Please enter your address.";
+
+        valid = false;
+
+    }
+
+
+    if (!valid) {
+        return;
+    }
+
+
+    /* GET EXISTING USERS */
+
+    let users = getUsers();
+
+
+    /* CHECK DUPLICATE EMAIL */
+
+    let emailExists = users.some(
+
+        user =>
+            user.email.toLowerCase()
+            === email.toLowerCase()
+
+    );
+
+
+    if (emailExists) {
+
+        document.getElementById("emailError")
+            .innerText =
+            "This email is already registered.";
+
+        return;
+
+    }
+
+
+    /* CHECK DUPLICATE MOBILE */
+
+    let mobileExists = users.some(
+
+        user =>
+            user.mobile === mobile
+
+    );
+
+
+    if (mobileExists) {
+
+        document.getElementById("mobileError")
+            .innerText =
+            "This mobile number is already registered.";
+
+        return;
+
+    }
+
+
+    /* CREATE USER */
+
+    let newUser = {
+
+        name: name,
+
+        email: email,
+
+        mobile: mobile,
+
+        password: password,
+
+        role: "Customer",
+
+        address: address
+
+    };
+
+
+    /* ADD USER */
+
+    users.push(newUser);
+
+
+    /* SAVE USER */
+
+    localStorage.setItem(
+
+        "freshcartUsers",
+
+        JSON.stringify(users)
+
+    );
+
+
+    alert(
+        "Account created successfully!"
+    );
+
+
+    /* CLEAR FORM */
+
+    document.getElementById("registerName")
+        .value = "";
+
+    document.getElementById("registerEmail")
+        .value = "";
+
+    document.getElementById("registerMobile")
+        .value = "";
+
+    document.getElementById("registerPassword")
+        .value = "";
+
+    document.getElementById("registerAddress")
+        .value = "";
+
+
+    /* SHOW LOGIN */
+
+    showLogin();
+
+}
+
+
+/* =====================================================
+   LOGIN
+====================================================== */
+
+function login() {
+
+    document.getElementById("loginUserError")
+        .innerText = "";
+
+    document.getElementById("loginPasswordError")
+        .innerText = "";
+
+
+    let loginUser =
+        document.getElementById("loginUser")
+        .value.trim();
+
+    let loginPassword =
+        document.getElementById("loginPassword")
+        .value;
+
+    let role =
+        document.getElementById("role")
+        .value;
+
+
+    if (loginUser === "") {
+
+        document.getElementById("loginUserError")
+            .innerText =
+            "Please enter email or mobile number.";
+
+        return;
+
+    }
+
+
+    if (loginPassword === "") {
+
+        document.getElementById("loginPasswordError")
+            .innerText =
+            "Please enter your password.";
+
+        return;
+
+    }
+
+
+    /* GET USERS */
+
+    let users = getUsers();
+
+
+    /* FIND USER */
+
+    let user = users.find(
+
+        u =>
+
+        (
+            u.email.toLowerCase()
+            === loginUser.toLowerCase()
+
+            ||
+
+            u.mobile === loginUser
+        )
+
+        &&
+
+        u.password === loginPassword
+
+        &&
+
+        u.role === role
+
+    );
+
+
+    /* INVALID LOGIN */
+
+    if (!user) {
+
+        alert(
+            "Invalid email/mobile, password or role."
+        );
+
+        return;
+
+    }
+
+
+    /* SAVE CURRENT USER */
+
+    localStorage.setItem(
+
+        "freshcartCurrentUser",
+
+        JSON.stringify(user)
+
+    );
+
+
+    /* HIDE LOGIN */
+
+    document.getElementById("authContainer")
+        .style.display = "none";
+
+
+    /* CUSTOMER */
+
+    if (role === "Customer") {
+
+        document.getElementById(
+            "customerDashboard"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "customerName"
+        ).innerText = user.name;
+
+
+        alert(
+            "Welcome " + user.name + "!"
+        );
+
+    }
+
+
+    /* EMPLOYEE */
+
+    else if (role === "Employee") {
+
+        document.getElementById(
+            "employeeDashboard"
+        ).style.display = "block";
+
+
+        alert(
+            "Welcome Employee!"
+        );
+
+    }
+
+
+    /* MANAGER */
+
+    else if (role === "Store Manager") {
+
+        document.getElementById(
+            "managerDashboard"
+        ).style.display = "block";
+
+
+        alert(
+            "Welcome Store Manager!"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+====================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "freshcartCurrentUser"
+    );
+
+
+    document.getElementById(
+        "customerDashboard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "employeeDashboard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "managerDashboard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "authContainer"
+    ).style.display = "flex";
+
+
+    showLogin();
+
+}
+
+
+/* =====================================================
+   CHECK CURRENT LOGIN
+====================================================== */
+
+window.onload = function() {
+
+    let currentUser =
+        JSON.parse(
+            localStorage.getItem(
+                "freshcartCurrentUser"
+            )
+        );
+
+
+    if (currentUser) {
+
+        document.getElementById(
+            "authContainer"
+        ).style.display = "none";
+
+
+        if (currentUser.role === "Customer") {
+
+            document.getElementById(
+                "customerDashboard"
+            ).style.display = "block";
+
+            document.getElementById(
+                "customerName"
+            ).innerText =
+                currentUser.name;
+
+        }
+
+        else if (
+            currentUser.role === "Employee"
+        ) {
+
+            document.getElementById(
+                "employeeDashboard"
+            ).style.display = "block";
+
+        }
+
+        else if (
+            currentUser.role === "Store Manager"
+        ) {
+
+            document.getElementById(
+                "managerDashboard"
+            ).style.display = "block";
+
+        }
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>

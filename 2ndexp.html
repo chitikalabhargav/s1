@@ -1,0 +1,161 @@
+<html lang="en">
+
+<head>
+    <title>Registration Form</title>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .instruction {
+            color: black;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Registration Form</h1>
+
+    <form onsubmit="return validateForm()">
+        
+        <label for="name">Full Name:</label><br>
+
+        <input type="text"
+               id="name"
+               placeholder="Enter your name"
+               required>
+
+        <br>
+
+        <span id="nameError" class="error"></span>
+
+        <br><br>
+        
+        <label for="username">Username:</label><br>
+
+        <input type="text"
+               id="username"
+               placeholder="Enter username"
+               required>
+
+        <br>
+
+        <span id="usernameError" class="error"></span>
+
+        <br><br>
+        
+        <label for="email">Email:</label><br>
+
+        <input type="text"
+               id="email"
+               placeholder="example@gmail.com"
+               required>
+
+        <br>
+
+        <span id="emailError" class="error"></span>
+
+        <br><br>
+        
+        <label for="phone">Phone Number:</label><br>
+
+        <input type="text"
+               id="phone"
+               placeholder="Enter 10 digit number"
+               required>
+
+        <br>
+
+
+        <span id="phoneError" class="error"></span>
+
+        <br><br>
+        
+        <label for="password">Password:</label><br>
+
+        <input type="password"
+               id="password"
+               placeholder="Enter password"
+               required>
+
+        <br>
+
+
+        <span id="passwordError" class="error"></span>
+
+        <br><br>
+        
+        <button type="submit">Register</button>
+
+        <button type="reset">Reset</button>
+
+    </form>
+
+    <script>
+
+        function validateForm() {
+
+            let valid = true;
+            
+            document.querySelectorAll(".error").forEach(function(error) {
+                error.innerHTML = "";
+            });
+            
+            let name = document.getElementById("name").value;
+
+            if (name.length < 4 ) {
+                document.getElementById("nameError").innerHTML =
+                    " Name must contain at least 3 characters.";
+                valid = false;
+            }
+            
+            let username = document.getElementById("username").value;
+
+            if (username.length < 4 || username.length > 15) {
+                document.getElementById("usernameError").innerHTML =
+                    " Username must contain 4–15 characters.";
+                valid = false;
+            }
+            
+            let email = document.getElementById("email").value;
+
+            let emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").innerHTML =
+                    " Please enter a valid email address.";
+                valid = false;
+            }
+            
+            let phone = document.getElementById("phone").value;
+
+            let phonePattern = /^[0-9]{10}$/;
+
+            if (!phonePattern.test(phone)) {
+                document.getElementById("phoneError").innerHTML =
+                    " Phone number must contain exactly 10 digits.";
+                valid = false;
+            }
+            
+            let password =
+                document.getElementById("password").value;
+
+            if (password.length < 8) {
+                document.getElementById("passwordError").innerHTML =
+                    " Password must contain at least 8 characters.";
+                valid = false;
+            }
+
+            return valid;
+        }
+
+    </script>
+
+</body>
+
+</html>
